@@ -1,0 +1,42 @@
+From 665b9834d2371403483da311f097075ff052e64b Mon Sep 17 00:00:00 2001
+From: Charlie Garner <charlie@akao.au>
+Date: Wed, 23 Sep 2026 07:27:01 +0930
+Subject: [PATCH 0/2] arm64: dts: qcom: Dell Inspiron 14 Plus 7441 backlight and touchscreen fixes
+
+Two fixes for the Dell Inspiron 14 Plus 7441.
+
+Patch 1 gives the eDP panel a PWM backlight. The AUO B140QAX01.H panel
+only supports PWM-pin brightness, so the DP AUX fallback registers a
+backlight with max_brightness 0 and brightness cannot be changed. The PWM
+wiring (PMK8550 gpio5 func3, pmk8550_pwm) matches the HP OmniBook X14.
+It goes in the Inspiron DT rather than x1-dell-thena.dtsi, because the
+Latitude 7455 was submitted with a different panel and a working
+backlight, and only the Inspiron has been tested. The dtsi only gains a
+panel label, which leaves the Latitude DTB functionally unchanged. If a
+Latitude 7455 owner can confirm the same PWM wiring, this can move to the
+dtsi.
+
+Patch 2 moves the touchscreen from 0x10, where nothing responds, to 0x09.
+That is where the HID-over-I2C device answers, where the firmware's DSDT
+places it on this machine, and where the Latitude 7455 DT already has the
+same part.
+
+As far as I know, no Inspiron 14 Plus 7441 has its touchscreen at 0x10.
+The original node matches the CRD, XPS 13 9345 and T14s nodes the DT was
+based on.
+
+Charlie Garner (2):
+  arm64: dts: qcom: x1e80100-dell-inspiron-14-plus-7441: add PWM
+    backlight
+  arm64: dts: qcom: x1e80100-dell-inspiron-14-plus-7441: fix touchscreen
+    i2c address
+
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi   |  2 +-
+ .../x1e80100-dell-inspiron-14-plus-7441.dts   | 31 +++++++++++++++++--
+ 2 files changed, 30 insertions(+), 3 deletions(-)
+
+
+base-commit: 32afff1e816e10185bb571aa9d89dc2eb061d548
+-- 
+2.55.0
+

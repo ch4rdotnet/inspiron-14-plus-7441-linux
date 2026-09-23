@@ -1,0 +1,123 @@
+--- a/camss.c
++++ b/camss.c
+@@ -3892,7 +3892,7 @@
+ 	},
+ };
+ 
+-static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
++static struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	/* CSIPHY0 */
+ 	{
+ 		.regulators = {
+@@ -4397,6 +4397,19 @@
+  *
+  * Return 0 on success or a negative error code on failure
+  */
++
++/*
++ * DIAG: which physical MIPI lanes the module is wired to is another undocumented
++ * board detail, and it lives in the DT endpoint, so trying alternatives would
++ * cost a rebuild each.  Override the parsed lane positions instead.
++ *
++ *   insmod camssdiag.ko lane0=2 lane1=3
++ */
++static int lane0 = -1, lane1 = -1, clklane = -1;
++module_param(lane0, int, 0444);
++module_param(lane1, int, 0444);
++module_param(clklane, int, 0444);
++
+ static int camss_parse_endpoint_node(struct device *dev,
+ 				     struct fwnode_handle *ep,
+ 				     struct camss_async_subdev *csd)
+@@ -4438,6 +4451,17 @@
+ 		lncfg->data[i].pol = mipi_csi2->lane_polarities[i + 1];
+ 	}
+ 
++	if (lane0 >= 0 && lncfg->num_data > 0)
++		lncfg->data[0].pos = lane0;
++	if (lane1 >= 0 && lncfg->num_data > 1)
++		lncfg->data[1].pos = lane1;
++	if (clklane >= 0)
++		lncfg->clk.pos = clklane;
++	if (lane0 >= 0 || lane1 >= 0 || clklane >= 0)
++		dev_info(dev, "camssdiag: lanes clk=%d data=%d,%d\n",
++			 lncfg->clk.pos, lncfg->data[0].pos,
++			 lncfg->num_data > 1 ? lncfg->data[1].pos : -1);
++
+ 	return 0;
+ }
+ 
+@@ -5315,6 +5339,53 @@
+ 	.vfe_num = ARRAY_SIZE(vfe_res_x1e80100),
+ };
+ 
++/*
++ * DIAG: which CSIPHY the board routes the sensor to is not documented anywhere,
++ * and the DT graph link is immutable, so trying each one would otherwise cost a
++ * kernel rebuild apiece.  Re-point csiphy0's registers, clocks and interrupt at
++ * another PHY instead: the media graph still says msm_csiphy0, but the hardware
++ * driven is whichever this selects.
++ *
++ *   insmod camssdiag.ko phy=1
++ */
++static int phy;
++module_param(phy, int, 0444);
++MODULE_PARM_DESC(phy, "physical CSIPHY to drive from the csiphy0 subdev (0,1,2,4)");
++
++static void camss_diag_repoint(void)
++{
++	struct camss_subdev_resources *a, *b;
++	char *tmp;
++	int i;
++
++	/*
++	 * Swap, rather than overwrite: every csiphy subdev maps its own register
++	 * window by name, so simply pointing csiphy0 at csiphy1's window makes
++	 * two subdevs claim it and the whole of camss fails to probe.  Swapping
++	 * keeps each window claimed exactly once.
++	 *
++	 * .csiphy.id is deliberately left alone - camss matches DT port@N to the
++	 * subdev with that id, so changing it unbinds the sensor from the graph.
++	 * Only the hardware behind the subdev moves.
++	 *
++	 * phy is an index into the table, which is csiphy0, 1, 2, 4.
++	 */
++	if (phy <= 0 || phy >= ARRAY_SIZE(csiphy_res_x1e80100))
++		return;
++
++	a = &csiphy_res_x1e80100[0];
++	b = &csiphy_res_x1e80100[phy];
++
++	for (i = 0; i < 2; i++) {
++		tmp = a->clock[i]; a->clock[i] = b->clock[i]; b->clock[i] = tmp;
++	}
++	tmp = a->reg[0];       a->reg[0] = b->reg[0];             b->reg[0] = tmp;
++	tmp = a->interrupt[0]; a->interrupt[0] = b->interrupt[0]; b->interrupt[0] = tmp;
++
++	pr_info("camssdiag: csiphy0 subdev now drives %s (swapped with index %d)\n",
++		a->reg[0], phy);
++}
++
+ static const struct of_device_id camss_dt_match[] = {
+ 	{ .compatible = "qcom,msm8916-camss", .data = &msm8916_resources },
+ 	{ .compatible = "qcom,msm8939-camss", .data = &msm8939_resources },
+@@ -5387,7 +5458,18 @@
+ 	},
+ };
+ 
+-module_platform_driver(qcom_camss_driver);
++static int __init camss_diag_init(void)
++{
++	camss_diag_repoint();
++	return platform_driver_register(&qcom_camss_driver);
++}
++module_init(camss_diag_init);
++
++static void __exit camss_diag_exit(void)
++{
++	platform_driver_unregister(&qcom_camss_driver);
++}
++module_exit(camss_diag_exit);
+ 
+ MODULE_DESCRIPTION("Qualcomm Camera Subsystem driver");
+ MODULE_AUTHOR("Todor Tomov <todor.tomov@linaro.org>");

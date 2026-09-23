@@ -1,0 +1,204 @@
+  enabled: file drivers/cpufreq/*
+  enabled: file drivers/firmware/arm_scmi/*
+  enabled: file drivers/opp/*
+  enabled: file drivers/pmdomain/arm/*
+  enabled: file drivers/base/power/*
+  sites now on: 184
+
+############ hotplug cpu4 ############
+  [ 5908.486536] cpufreq: cpufreq_offline: unregistering CPU 4
+  [ 5908.486547] cpufreq: cpufreq_offline: No cpu_data found
+  [ 5908.494344] IRQ123: set affinity failed(-22).
+  [ 5908.494346] IRQ124: set affinity failed(-22).
+  [ 5908.494348] IRQ128: set affinity failed(-22).
+  [ 5908.494365] IRQ185: set affinity failed(-22).
+  [ 5908.494867] psci: CPU4 killed (polled 0 ms)
+  [ 5908.519697] qcom-bwmon 240b3400.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 7464000 -> 4800000
+  [ 5908.521134] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 6220800 -> 2188000
+  [ 5908.589250] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5908.748068] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5908.749208] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5908.945465] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5909.093555] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5909.245381] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5909.253386] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5909.352512] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5909.461432] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 3072000
+  [ 5909.463778] qcom-bwmon 240b3400.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 4800000 -> 7464000
+  [ 5909.517307] Detected PIPT I-cache on CPU4
+  [ 5909.517333] GICv3: CPU4: found redistributor 10000 region 0:0x0000000017180000
+  [ 5909.517522] CPU4: Booted secondary processor 0x0000010000 [0x511f0011]
+  [ 5909.518251] cpufreq: cpufreq_online: bringing CPU4 online
+  [ 5909.518291] cpu cpu4: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 5909.518300] cpu cpu4: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 5909.518363] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518391] cpu cpu4: [1][NCC1]:: Registered OPP[0] 710400000
+  [ 5909.518393] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518412] cpu cpu4: [1][NCC1]:: Registered OPP[1] 806400000
+  [ 5909.518413] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518432] cpu cpu4: [1][NCC1]:: Registered OPP[2] 998400000
+  [ 5909.518433] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518474] cpu cpu4: [1][NCC1]:: Registered OPP[3] 1190400000
+  [ 5909.518476] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518496] cpu cpu4: [1][NCC1]:: Registered OPP[4] 1440000000
+  [ 5909.518497] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518515] cpu cpu4: [1][NCC1]:: Registered OPP[5] 1670400000
+  [ 5909.518517] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518535] cpu cpu4: [1][NCC1]:: Registered OPP[6] 1920000000
+  [ 5909.518536] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518572] cpu cpu4: [1][NCC1]:: Registered OPP[7] 2188800000
+  [ 5909.518574] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518592] cpu cpu4: [1][NCC1]:: Registered OPP[8] 2515200000
+  [ 5909.518593] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518612] cpu cpu4: [1][NCC1]:: Registered OPP[9] 2707200000
+  [ 5909.518613] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518633] cpu cpu4: [1][NCC1]:: Registered OPP[10] 2976000000
+  [ 5909.518634] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518678] cpu cpu4: [1][NCC1]:: Registered OPP[11] 3206400000
+  [ 5909.518679] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5909.518697] cpu cpu4: [1][NCC1]:: Registered OPP[12] 3417600000
+  [ 5909.518747] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000001
+  [ 5909.520689] cpufreq: last reference is dropped
+  [ 5909.520698] cpufreq: waiting for dropping of refcount
+  [ 5909.520699] cpufreq: wait complete
+  [ 5909.525571] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 3072000 -> 2188000
+  [ 5909.527781] qcom-bwmon 240b3400.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 7464000 -> 4800000
+  [ 5909.591781] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5909.741501] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5909.813676] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5909.877829] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5909.909735] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5909.950485] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 300000000 Hz, Level 192 -> 56, Bw 8171875 -> 2136719
+  [ 5910.045996] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.050025] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.114735] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.390067] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.455994] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.462115] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.528120] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.550469] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.551144] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 300000000 -> 687000000 Hz, Level 56 -> 192, Bw 2136719 -> 8171875
+  [ 5910.628345] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.666548] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.668539] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5910.766745] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.806678] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.872566] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5910.910801] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5910.974991] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5911.151072] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5911.151602] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5911.215063] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5911.263129] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5911.272929] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5911.531360] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5911.627337] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5911.691272] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5911.699315] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5911.751633] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 300000000 Hz, Level 192 -> 56, Bw 8171875 -> 2136719
+  [ 5911.967502] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5912.001589] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5912.275654] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5912.279885] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5912.351833] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 300000000 -> 687000000 Hz, Level 56 -> 192, Bw 2136719 -> 8171875
+  ---
+  -> cpu4 still has NO cpufreq directory
+
+############ hotplug cpu8 ############
+  [ 5912.543731] cpufreq: cpufreq_offline: unregistering CPU 8
+  [ 5912.543740] cpufreq: cpufreq_offline: No cpu_data found
+  [ 5912.557492] IRQ123: set affinity failed(-22).
+  [ 5912.557494] IRQ124: set affinity failed(-22).
+  [ 5912.557496] IRQ128: set affinity failed(-22).
+  [ 5912.557512] IRQ185: set affinity failed(-22).
+  [ 5912.558051] psci: CPU8 killed (polled 0 ms)
+  [ 5912.691676] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 3072000
+  [ 5912.756060] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 3072000 -> 2188000
+  [ 5912.950211] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5913.007874] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5913.012026] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5913.024171] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 3072000
+  [ 5913.088002] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 3072000 -> 2188000
+  [ 5913.220191] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5913.308041] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5913.390082] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5913.460306] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5913.464337] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 3072000
+  [ 5913.528532] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 3072000 -> 2188000
+  [ 5913.550884] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 687000000 Hz, Level 192 -> 192, Bw 8171875 -> 8171875
+  [ 5913.575992] Detected PIPT I-cache on CPU8
+  [ 5913.576019] GICv3: CPU8: found redistributor 20000 region 0:0x0000000017280000
+  [ 5913.576197] CPU8: Booted secondary processor 0x0000020000 [0x511f0011]
+  [ 5913.576629] cpufreq: cpufreq_online: bringing CPU8 online
+  [ 5913.576682] cpu cpu8: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 5913.576690] cpu cpu8: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 5913.576735] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576762] cpu cpu8: [2][NCC2]:: Registered OPP[0] 710400000
+  [ 5913.576764] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576808] cpu cpu8: [2][NCC2]:: Registered OPP[1] 806400000
+  [ 5913.576809] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576829] cpu cpu8: [2][NCC2]:: Registered OPP[2] 998400000
+  [ 5913.576830] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576861] cpu cpu8: [2][NCC2]:: Registered OPP[3] 1190400000
+  [ 5913.576863] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576882] cpu cpu8: [2][NCC2]:: Registered OPP[4] 1440000000
+  [ 5913.576883] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576903] cpu cpu8: [2][NCC2]:: Registered OPP[5] 1670400000
+  [ 5913.576905] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576924] cpu cpu8: [2][NCC2]:: Registered OPP[6] 1920000000
+  [ 5913.576926] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576964] cpu cpu8: [2][NCC2]:: Registered OPP[7] 2188800000
+  [ 5913.576965] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.576984] cpu cpu8: [2][NCC2]:: Registered OPP[8] 2515200000
+  [ 5913.576985] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.577003] cpu cpu8: [2][NCC2]:: Registered OPP[9] 2707200000
+  [ 5913.577005] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.577022] cpu cpu8: [2][NCC2]:: Registered OPP[10] 2976000000
+  [ 5913.577024] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.577064] cpu cpu8: [2][NCC2]:: Registered OPP[11] 3206400000
+  [ 5913.577065] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 5913.577082] cpu cpu8: [2][NCC2]:: Registered OPP[12] 3417600000
+  [ 5913.577129] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000002
+  [ 5913.578716] cpufreq: last reference is dropped
+  [ 5913.578719] cpufreq: waiting for dropping of refcount
+  [ 5913.578720] cpufreq: wait complete
+  [ 5913.798405] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5913.808661] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5913.940824] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5913.964897] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5914.024522] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 687000000 -> 1250000000 Hz, Level 192 -> 448, Bw 8171875 -> 16500000
+  [ 5914.160737] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5914.176767] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5914.242762] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5914.277205] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5914.341174] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5914.441069] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5914.481935] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 1250000000 -> 300000000 Hz, Level 448 -> 56, Bw 16500000 -> 2136719
+  [ 5914.509151] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 3072000
+  [ 5914.529398] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 3072000 -> 6220800
+  [ 5914.531812] qcom-bwmon 240b3400.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 4800000 -> 7464000
+  [ 5914.603939] qcom-bwmon 240b3400.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 7464000 -> 4800000
+  [ 5914.625205] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 6220800 -> 2188000
+  [ 5914.701214] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5914.753257] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5915.001588] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5915.093369] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5915.146749] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 300000000 -> 300000000 Hz, Level 56 -> 56, Bw 2136719 -> 2136719
+  [ 5915.405688] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5915.461417] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5915.554479] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5915.882880] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5915.891117] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 300000000 -> 300000000 Hz, Level 56 -> 56, Bw 2136719 -> 2136719
+  [ 5915.945676] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5915.957709] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5916.037668] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5916.209719] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5916.273992] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  [ 5916.349867] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 800000 -> 2188000
+  [ 5916.355676] adreno 3d00000.gpu: _set_opp: switching OPP: Freq 300000000 -> 300000000 Hz, Level 56 -> 56, Bw 2136719 -> 2136719
+  [ 5916.569852] qcom-bwmon 24091000.pmu: _set_opp: switching OPP: Freq 0 -> 0 Hz, Level 4294967295 -> 4294967295, Bw 2188000 -> 800000
+  ---
+  -> cpu8 still has NO cpufreq directory
+
+Final policies:
+  policy0: [0 1 2 3]

@@ -1,0 +1,693 @@
+############ 1. SMBIOS cooling device + temperature probes ############
+--- type 27 (Cooling Device) ---
+  # dmidecode 3.7
+  Getting SMBIOS data from sysfs.
+  SMBIOS 3.3.0 present.
+  
+  Handle 0x1B00, DMI type 27, 15 bytes
+  Cooling Device
+  	Type: Fan
+  	Status: OK
+  	OEM-specific Information: 0x0000DD00
+  	Nominal Speed: 4800 rpm
+  	Description: Processor Fan
+  
+--- type 28 (Temperature Probe) ---
+  # dmidecode 3.7
+  Getting SMBIOS data from sysfs.
+  SMBIOS 3.3.0 present.
+  
+  Handle 0x1C00, DMI type 28, 22 bytes
+  Temperature Probe
+  	Description: CPU
+  	Location: Processor Module
+  	Status: OK
+  	Maximum Value: 0.0 deg C
+  	Minimum Value: 0.0 deg C
+  	Resolution: 0.000 deg C
+  	Tolerance: 0.0 deg C
+  	Accuracy: 0.00%
+  	OEM-specific Information: 0x0000DC00
+  	Nominal Value: 0.0 deg C
+  
+  Handle 0x1C01, DMI type 28, 22 bytes
+  Temperature Probe
+  	Description: SKIN
+  	Location: Motherboard
+  	Status: OK
+  	Maximum Value: 0.0 deg C
+  	Minimum Value: 0.0 deg C
+  	Resolution: 0.000 deg C
+  	Tolerance: 0.0 deg C
+  	Accuracy: 0.00%
+  	OEM-specific Information: 0x0000DC01
+  	Nominal Value: 0.0 deg C
+  
+  Handle 0x1C02, DMI type 28, 22 bytes
+  Temperature Probe
+  	Description: SKIN
+  	Location: Motherboard
+  	Status: OK
+  	Maximum Value: 0.0 deg C
+  	Minimum Value: 0.0 deg C
+  	Resolution: 0.000 deg C
+  	Tolerance: 0.0 deg C
+  	Accuracy: 0.00%
+  	OEM-specific Information: 0x0000DC02
+  	Nominal Value: 0.0 deg C
+  
+  Handle 0x1C03, DMI type 28, 22 bytes
+  Temperature Probe
+  	Description: SKIN
+  	Location: Motherboard
+  	Status: OK
+  	Maximum Value: 0.0 deg C
+  	Minimum Value: 0.0 deg C
+  	Resolution: 0.000 deg C
+  	Tolerance: 0.0 deg C
+  	Accuracy: 0.00%
+  	OEM-specific Information: 0x0000DC03
+  	Nominal Value: 0.0 deg C
+  
+  Handle 0x1C04, DMI type 28, 22 bytes
+  Temperature Probe
+  	Description: HDD
+  	Location: Disk
+  	Status: OK
+  	Maximum Value: 0.0 deg C
+  	Minimum Value: 0.0 deg C
+  	Resolution: 0.000 deg C
+  	Tolerance: 0.0 deg C
+  	Accuracy: 0.00%
+  	OEM-specific Information: 0x0000DC04
+  	Nominal Value: 0.0 deg C
+  
+  Handle 0x1C05, DMI type 28, 22 bytes
+  Temperature Probe
+  	Description: SKIN
+  	Location: Motherboard
+  	Status: OK
+  	Maximum Value: 0.0 deg C
+  	Minimum Value: 0.0 deg C
+  	Resolution: 0.000 deg C
+  	Tolerance: 0.0 deg C
+  	Accuracy: 0.00%
+  	OEM-specific Information: 0x0000DC05
+  	Nominal Value: 0.0 deg C
+  
+
+############ 2. Dell OEM SMBIOS tables ############
+these are dell-private. 220 has six instances, which is where per-fan or
+per-thermal-zone data would plausibly live.
+--- 177-0  (0 bytes) ---
+   b1 0c 00 b1 18 00 00 00 00 00 00 00 00 00
+--- 178-0  (0 bytes) ---
+   b2 50 00 b2 3d 00 0c 00 3c 00 0a 00 3b 00 0b 00
+   0a 01 12 00 52 00 20 00 30 00 24 00 42 00 18 00
+   41 00 14 00 40 00 13 00 10 00 ff 00 11 00 ff 00
+   12 00 ff 00 13 00 ff 00 14 00 ff 00 1e 00 ff 00
+   1f 00 ff 00 20 00 ff 00 21 00 ff 00 22 00 ff 00
+   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+   20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+   20 20 20 20 20 20 20 20 20 20 20 20 00 00
+  strings:
+                                                
+--- 179-0  (0 bytes) ---
+  [redacted, a 256-bit hash?]
+--- 208-0  (0 bytes) ---
+   d0 10 00 d0 03 11 fe 00 86 0c 01 02 00 00 00 00
+   [redacted]
+  strings:
+    [redacted, two dates (probably build or first boot)]
+--- 216-0  (0 bytes) ---
+   d8 09 00 d8 01 02 01 88 00 22 51 75 61 6c 63 6f
+   6d 6d 20 49 6e 63 2e 22 00 22 31 30 30 30 22 00
+   00
+  strings:
+    "Qualcomm Inc."
+    "1000"
+--- 217-0  (0 bytes) ---
+   d9 08 00 d9 01 02 01 03 55 53 2d 31 30 31 00 50
+   72 6f 70 72 69 65 74 61 72 79 00 00
+  strings:
+    US-101
+    Proprietary
+--- 220-0  (0 bytes) ---
+   dc 14 00 dc 00 f1 00 00 02 f1 00 00 00 00 00 00
+   00 00 00 00 00 00
+--- 220-1  (0 bytes) ---
+   dc 14 01 dc 10 f1 00 00 12 f1 00 00 00 00 00 00
+   00 00 00 00 00 00
+--- 220-2  (0 bytes) ---
+   dc 14 02 dc 20 f1 00 00 22 f1 00 00 00 00 00 00
+   00 00 00 00 00 00
+--- 220-3  (0 bytes) ---
+   dc 14 03 dc 30 f1 00 00 32 f1 00 00 00 00 00 00
+   00 00 00 00 00 00
+--- 220-4  (0 bytes) ---
+   dc 14 04 dc 40 f1 00 00 42 f1 00 00 00 00 00 00
+   00 00 00 00 00 00
+--- 220-5  (0 bytes) ---
+   dc 14 05 dc 50 f1 00 00 52 f1 00 00 00 00 00 00
+   00 00 00 00 00 00
+--- 221-0  (0 bytes) ---
+   dd 13 00 dd 03 01 00 00 f6 01 f6 00 00 00 00 00
+   00 00 00 00 00
+--- 222-0  (0 bytes) ---
+   de 10 00 de 00 00 ff ff 00 00 00 00 00 00 00 00
+   00 00
+--- 255-0  (0 bytes) ---
+   ff 06 10 00 01 02 [redacted] 00 30 43 38 36 00 00
+  strings:
+    [redacted, dell _SID strings]
+    0C86
+
+############ 3. every GPIO, including unclaimed ############
+looking for a pin that could be fan pwm out or tach in.
+  gpiochip0: 6 GPIOs, parent: platform/c42d000.spmi:pmic@0:gpio@8800, c42d000.spmi:pmic@0:gpio@8800:
+   gpio1 : in   low  normal  vin-0 no pull                     push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 no pull                     push-pull  low     atest-1 dtest-0
+   gpio3 : out  low  func1   vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio5 : out  low  func3   vin-0 pull-down 10uA              push-pull  medium  atest-1 dtest-0
+   gpio6 : in   high normal  vin-0 pull-up 30uA                push-pull  low     atest-1 dtest-0
+  
+  gpiochip1: 12 GPIOs, parent: platform/c42d000.spmi:pmic@1:gpio@8800, c42d000.spmi:pmic@1:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : ---
+   gpio4 : ---
+   gpio5 : in   low  normal  vin-0 pull-up 30uA                push-pull  low     atest-1 dtest-0
+   gpio6 : in   high normal  vin-1 pull-up 30uA                push-pull  low     atest-1 dtest-0
+   gpio7 : out  high func1   vin-1 no pull                     push-pull  low     atest-1 dtest-0
+   gpio8 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio9 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio10: out  high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+   gpio11: out  high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+   gpio12: in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip2: 8 GPIOs, parent: platform/c42d000.spmi:pmic@2:gpio@8800, c42d000.spmi:pmic@2:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio5 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio6 : out  high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio7 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio8 : out  low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip3: 10 GPIOs, parent: platform/c42d000.spmi:pmic@3:gpio@8800, c42d000.spmi:pmic@3:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : out  high normal  vin-0 pull-down 10uA              push-pull  medium  atest-1 dtest-0
+   gpio5 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio6 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio7 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio8 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio9 : out  low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio10: in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip4: 10 GPIOs, parent: platform/c42d000.spmi:pmic@4:gpio@8800, c42d000.spmi:pmic@4:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : in   low  func2   vin-1 pull-down 10uA              push-pull  high    atest-1 dtest-0
+   gpio5 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio6 : in   low  func2   vin-1 pull-down 10uA              push-pull  high    atest-1 dtest-0
+   gpio7 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio8 : out  low  normal  vin-2 no pull                     push-pull  low     atest-1 dtest-0
+   gpio9 : in   high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio10: in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip5: 10 GPIOs, parent: platform/c42d000.spmi:pmic@5:gpio@8800, c42d000.spmi:pmic@5:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio5 : out  high normal  vin-2 no pull                     push-pull  low     atest-1 dtest-0
+   gpio6 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio7 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio8 : out  high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+   gpio9 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio10: out  high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip6: 10 GPIOs, parent: platform/c42d000.spmi:pmic@6:gpio@8800, c42d000.spmi:pmic@6:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio5 : in   low  func2   vin-1 pull-down 10uA              push-pull  high    atest-1 dtest-0
+   gpio6 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio7 : in   low  func2   vin-1 pull-down 10uA              push-pull  high    atest-1 dtest-0
+   gpio8 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio9 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio10: in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip7: 8 GPIOs, parent: platform/c42d000.spmi:pmic@8:gpio@8800, c42d000.spmi:pmic@8:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : out  high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio5 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio6 : out  high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio7 : in   low  normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio8 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+  
+  gpiochip8: 8 GPIOs, parent: platform/c42d000.spmi:pmic@9:gpio@8800, c42d000.spmi:pmic@9:gpio@8800:
+   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio4 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio5 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio6 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+   gpio7 : out  high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+   gpio8 : out  high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+  
+  gpiochip9: 239 GPIOs, parent: platform/f100000.pinctrl, f100000.pinctrl:
+   gpio0   : in  high func1 2mA pull up
+   gpio1   : in  high func1 2mA pull up
+   gpio2   : in  high func0 2mA pull down
+   gpio3   : in  high func0 2mA pull up
+   gpio4   : in  high func1 2mA pull up
+   gpio5   : in  high func1 2mA pull up
+   gpio6   : out high func0 2mA no pull
+   gpio7   : in  low  func0 2mA pull down
+   gpio8   : in  low  func0 2mA no pull
+   gpio9   : in  low  func0 2mA pull down
+   gpio10  : in  high func0 2mA no pull
+   gpio11  : in  low  func0 2mA pull down
+   gpio12  : in  high func1 2mA pull up
+   gpio13  : in  high func1 2mA pull up
+   gpio14  : in  high func2 2mA pull up
+   gpio15  : in  high func2 2mA pull up
+   gpio16  : in  high func0 2mA pull down
+   gpio17  : in  high func0 2mA pull down
+   gpio18  : out high func0 2mA no pull
+   gpio19  : in  low  func0 2mA pull down
+   gpio20  : in  high func1 2mA pull up
+   gpio21  : in  high func1 2mA pull up
+   gpio22  : in  low  func0 2mA pull down
+   gpio23  : in  high func0 4mA no pull
+   gpio24  : in  high func0 2mA pull down
+   gpio25  : in  low  func0 2mA pull down
+   gpio26  : in  high func0 2mA pull down
+   gpio27  : in  low  func0 2mA pull down
+   gpio28  : in  low  func0 2mA pull down
+   gpio29  : in  low  func0 2mA pull down
+   gpio30  : in  low  func0 2mA no pull
+   gpio31  : in  low  func0 2mA no pull
+   gpio32  : in  high func1 2mA pull up
+   gpio33  : in  high func1 2mA pull up
+   gpio34  : in  low  func0 2mA pull down
+   gpio35  : in  high func0 2mA pull down
+   gpio36  : in  high func0 2mA pull down
+   gpio37  : in  high func0 2mA pull down
+   gpio38  : out high func0 2mA pull down
+   gpio39  : in  low  func2 2mA pull down
+   gpio40  : in  high func0 2mA pull down
+   gpio41  : in  low  func0 2mA no pull
+   gpio42  : in  low  func0 2mA no pull
+   gpio43  : in  low  func0 2mA no pull
+   gpio48  : out low  func0 2mA pull up
+   gpio49  : in  low  func0 2mA pull down
+   gpio50  : in  low  func0 2mA pull down
+   gpio51  : in  low  func0 2mA pull up
+   gpio52  : out high func0 8mA no pull
+   gpio53  : in  low  func0 2mA no pull
+   gpio54  : in  high func0 2mA no pull
+   gpio55  : in  high func0 2mA no pull
+   gpio56  : in  low  func1 2mA keeper
+   gpio57  : in  low  func1 2mA no pull
+   gpio58  : in  high func1 2mA no pull
+   gpio59  : in  high func1 2mA pull up
+   gpio60  : in  low  func0 2mA pull down
+   gpio61  : in  low  func0 2mA pull down
+   gpio62  : in  low  func0 2mA pull down
+   gpio63  : in  low  func0 2mA pull down
+   gpio64  : in  low  func0 2mA pull down
+   gpio65  : in  low  func0 2mA pull down
+   gpio66  : in  high func0 2mA no pull
+   gpio67  : in  high func0 6mA pull up
+   gpio68  : in  low  func0 2mA pull down
+   gpio69  : in  low  func0 2mA pull down
+   gpio70  : out high func0 16mA no pull
+   gpio71  : in  high func0 2mA pull up
+   gpio72  : in  low  func0 2mA pull down
+   gpio73  : in  low  func0 2mA pull down
+   gpio74  : out high func0 2mA no pull
+   gpio75  : out high func0 16mA pull up
+   gpio82  : in  high func0 2mA no pull
+   gpio83  : in  low  func0 2mA no pull
+   gpio84  : in  high func0 6mA pull up
+   gpio85  : in  high func0 2mA no pull
+   gpio86  : out low  func1 2mA pull up
+   gpio87  : in  low  func1 2mA pull down
+   gpio88  : in  low  func0 2mA pull down
+   gpio89  : in  low  func0 2mA pull down
+   gpio90  : in  low  func0 2mA pull down
+   gpio91  : out low  func0 2mA no pull
+   gpio92  : in  high func0 2mA no pull
+   gpio93  : in  high func0 2mA no pull
+   gpio94  : in  low  func0 2mA pull down
+   gpio95  : in  low  func0 2mA pull down
+   gpio96  : in  low  func0 2mA pull down
+   gpio97  : in  low  func0 2mA no pull
+   gpio98  : in  high func0 2mA pull down
+   gpio99  : in  low  func0 2mA pull down
+   gpio100 : in  low  func0 2mA pull down
+   gpio101 : in  low  func0 2mA pull down
+   gpio102 : in  low  func0 2mA pull down
+   gpio103 : in  low  func0 2mA pull down
+   gpio104 : in  low  func0 2mA pull down
+   gpio105 : out low  func0 2mA no pull
+   gpio106 : in  low  func0 2mA pull down
+   gpio107 : in  low  func0 2mA pull down
+   gpio108 : in  low  func0 2mA pull down
+   gpio109 : in  low  func0 2mA pull down
+   gpio110 : out low  func0 2mA no pull
+   gpio111 : in  low  func0 2mA pull down
+   gpio112 : in  low  func0 2mA pull down
+   gpio113 : in  low  func0 2mA pull down
+   gpio114 : in  low  func0 2mA pull down
+   gpio115 : in  low  func0 2mA pull down
+   gpio116 : out high func0 2mA no pull
+   gpio117 : out high func0 2mA no pull
+   gpio118 : in  low  func0 2mA pull down
+   gpio119 : in  high func1 2mA no pull
+   gpio120 : in  low  func0 2mA pull down
+   gpio121 : in  low  func0 2mA pull down
+   gpio122 : in  low  func0 2mA pull down
+   gpio123 : in  high func0 2mA pull down
+   gpio124 : in  low  func0 2mA pull down
+   gpio125 : in  low  func0 2mA pull down
+   gpio126 : out high func0 2mA no pull
+   gpio127 : in  low  func1 4mA no pull
+   gpio128 : in  high func1 4mA pull down
+   gpio129 : in  low  func1 4mA pull down
+   gpio130 : in  low  func1 4mA pull down
+   gpio131 : in  high func1 4mA pull down
+   gpio132 : in  high func1 4mA no pull
+   gpio133 : in  high func1 4mA no pull
+   gpio134 : in  low  func0 2mA pull down
+   gpio135 : in  high func0 2mA pull down
+   gpio136 : in  low  func0 2mA no pull
+   gpio137 : in  low  func0 2mA no pull
+   gpio138 : in  low  func0 2mA pull down
+   gpio139 : in  low  func0 2mA pull down
+   gpio140 : out high func0 2mA pull up
+   gpio141 : in  low  func0 2mA pull down
+   gpio142 : out high func0 2mA pull up
+   gpio143 : in  low  func0 2mA pull down
+   gpio144 : in  high func0 2mA pull up
+   gpio145 : in  low  func0 2mA pull down
+   gpio146 : out high func0 2mA no pull
+   gpio147 : in  high func1 2mA pull up
+   gpio148 : in  high func0 2mA pull up
+   gpio149 : in  low  func0 2mA pull down
+   gpio150 : in  high func0 2mA pull up
+   gpio151 : in  low  func0 2mA pull down
+   gpio152 : out high func0 2mA no pull
+   gpio153 : in  high func1 2mA pull up
+   gpio154 : in  high func0 2mA pull up
+   gpio155 : in  low  func0 2mA pull down
+   gpio156 : in  high func0 2mA pull up
+   gpio157 : in  low  func0 2mA no pull
+   gpio158 : in  low  func0 2mA pull down
+   gpio159 : in  low  func0 2mA pull down
+   gpio160 : in  high func1 2mA pull down
+   gpio161 : in  low  func0 2mA pull down
+   gpio162 : in  low  func0 2mA pull down
+   gpio163 : in  low  func0 2mA pull down
+   gpio164 : in  low  func0 2mA pull down
+   gpio165 : in  low  func0 2mA pull down
+   gpio166 : in  low  func0 2mA pull down
+   gpio167 : in  low  func0 2mA pull down
+   gpio168 : in  low  func0 2mA pull down
+   gpio169 : in  low  func0 2mA no pull
+   gpio170 : in  low  func0 2mA pull down
+   gpio171 : in  low  func0 2mA pull down
+   gpio172 : in  low  func0 2mA pull down
+   gpio173 : in  low  func0 2mA pull down
+   gpio174 : in  low  func0 2mA pull down
+   gpio175 : out high func0 2mA no pull
+   gpio176 : out high func0 2mA no pull
+   gpio177 : in  low  func0 2mA pull down
+   gpio178 : in  low  func0 2mA pull down
+   gpio179 : in  low  func0 2mA pull down
+   gpio180 : in  low  func0 2mA pull down
+   gpio181 : in  low  func0 2mA pull down
+   gpio182 : in  low  func0 2mA pull down
+   gpio183 : in  low  func0 2mA pull down
+   gpio184 : out high func0 2mA no pull
+   gpio185 : out high func0 2mA no pull
+   gpio186 : out high func0 2mA no pull
+   gpio187 : out high func0 2mA no pull
+   gpio188 : out high func0 2mA no pull
+   gpio189 : out high func0 2mA no pull
+   gpio190 : in  low  func0 2mA pull down
+   gpio191 : out high func0 16mA no pull
+   gpio192 : egpio
+   gpio193 : egpio
+   gpio194 : egpio
+   gpio195 : egpio
+   gpio196 : egpio
+   gpio197 : egpio
+   gpio198 : egpio
+   gpio199 : egpio
+   gpio200 : egpio
+   gpio201 : egpio
+   gpio202 : egpio
+   gpio203 : egpio
+   gpio204 : egpio
+   gpio205 : egpio
+   gpio206 : egpio
+   gpio207 : egpio
+   gpio208 : egpio
+   gpio209 : egpio
+   gpio210 : egpio
+   gpio211 : egpio
+   gpio212 : egpio
+   gpio213 : egpio
+   gpio214 : out high func0 2mA no pull
+   gpio215 : egpio
+   gpio216 : egpio
+   gpio217 : egpio
+   gpio218 : egpio
+   gpio219 : egpio
+   gpio220 : egpio
+   gpio221 : egpio
+   gpio222 : egpio
+   gpio223 : egpio
+   gpio224 : egpio
+   gpio225 : egpio
+   gpio226 : egpio
+   gpio227 : egpio
+   gpio228 : egpio
+   gpio229 : egpio
+   gpio230 : egpio
+   gpio231 : egpio
+   gpio232 : egpio
+   gpio233 : egpio
+   gpio234 : egpio
+   gpio235 : egpio
+   gpio236 : egpio
+   gpio237 : egpio
+  
+  gpiochip10: 23 GPIOs, parent: platform/6e80000.pinctrl, 6e80000.pinctrl, can sleep:
+   gpio0   : in  1 2mA no pull
+   gpio1   : in  1 2mA keeper
+   gpio2   : in  1 2mA keeper
+   gpio3   : in  1 2mA no pull
+   gpio4   : in  1 2mA keeper
+   gpio5   : in  1 2mA keeper
+   gpio6   : out 1 8mA no pull
+   gpio7   : in  1 8mA no pull
+   gpio8   : in  0 2mA pull down
+   gpio9   : in  0 2mA pull down
+   gpio10  : in  2 2mA no pull
+   gpio11  : in  2 2mA keeper
+   gpio12  : out 0 2mA no pull
+   gpio13  : out 0 2mA no pull
+   gpio14  : in  0 2mA pull down
+   gpio15  : in  2 2mA no pull
+   gpio16  : in  2 2mA keeper
+   gpio17  : in  0 2mA pull down
+   gpio18  : in  0 2mA pull down
+   gpio19  : in  0 2mA pull down
+   gpio20  : in  0 2mA pull down
+   gpio21  : in  0 2mA pull down
+   gpio22  : in  0 2mA pull down
+  
+  gpiochip11: 1 GPIOs, parent: auxiliary/gpiolib_shared.proxy.14, gpiolib_shared.proxy.14, can sleep:
+  
+  gpiochip12: 1 GPIOs, parent: auxiliary/gpiolib_shared.proxy.15, gpiolib_shared.proxy.15, can sleep:
+   gpio-0   (                    |reset               ) out hi ACTIVE LOW
+  
+  gpiochip13: 1 GPIOs, parent: auxiliary/gpiolib_shared.proxy.16, gpiolib_shared.proxy.16, can sleep:
+  
+  gpiochip14: 1 GPIOs, parent: auxiliary/gpiolib_shared.proxy.17, gpiolib_shared.proxy.17, can sleep:
+  
+  gpiochip15: 1 GPIOs, parent: auxiliary/gpiolib_shared.proxy.18, gpiolib_shared.proxy.18, can sleep:
+   gpio-0   (                    |reset               ) out hi ACTIVE LOW
+  
+  gpiochip16: 1 GPIOs, parent: auxiliary/gpiolib_shared.proxy.19, gpiolib_shared.proxy.19, can sleep:
+
+############ 4. full pinmux (claimed + unclaimed) ############
+--- 6e80000.pinctrl ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+  pin 12 (gpio12): 6b10000.soundwire 6e80000.pinctrl:845 function gpio group gpio12
+  pin 13 (gpio13): 6ab0000.soundwire 6e80000.pinctrl:846 function gpio group gpio13
+--- c42d000.spmi:pmic@0:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+--- c42d000.spmi:pmic@1:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+  pin 9 (gpio10): 2-0008 c42d000.spmi:pmic@1:gpio@8800:527 function normal group gpio10
+  pin 10 (gpio11): regulator-rtmr0-3p3 c42d000.spmi:pmic@1:gpio@8800:528 function normal group gpio11
+--- c42d000.spmi:pmic@2:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+--- c42d000.spmi:pmic@3:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+--- c42d000.spmi:pmic@4:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+--- c42d000.spmi:pmic@5:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+  pin 7 (gpio8): regulator-rtmr0-1p15 c42d000.spmi:pmic@5:gpio@8800:565 function normal group gpio8
+--- c42d000.spmi:pmic@6:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+--- c42d000.spmi:pmic@8:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+--- c42d000.spmi:pmic@9:gpio@8800 ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner gpio_owner hog?
+  pin 7 (gpio8): regulator-rtmr0-1p8 c42d000.spmi:pmic@9:gpio@8800:593 function normal group gpio8
+--- f100000.pinctrl ---
+  Pinmux settings per pin
+  Format: pin (name): mux_owner|gpio_owner (strict) hog?
+  pin 0 (GPIO_0): device b80000.i2c function qup0_se0 group gpio0
+  pin 1 (GPIO_1): device b80000.i2c function qup0_se0 group gpio1
+  pin 3 (GPIO_3): device 1-002c function gpio group gpio3
+  pin 6 (GPIO_6): device 3-0043 function gpio group gpio6
+  pin 12 (GPIO_12): device b8c000.i2c function qup0_se3 group gpio12
+  pin 13 (GPIO_13): device b8c000.i2c function qup0_se3 group gpio13
+  pin 14 (GPIO_14): device b9c000.i2c function qup0_se7 group gpio14
+  pin 15 (GPIO_15): device b9c000.i2c function qup0_se7 group gpio15
+  pin 18 (GPIO_18): device regulator-nvme function gpio group gpio18
+  pin 20 (GPIO_20): device b94000.i2c function qup0_se5 group gpio20
+  pin 21 (GPIO_21): device b94000.i2c function qup0_se5 group gpio21
+  pin 32 (GPIO_32): device a80000.i2c function qup1_se0 group gpio32
+  pin 33 (GPIO_33): device a80000.i2c function qup1_se0 group gpio33
+  pin 38 (GPIO_38): device 1-002c function gpio group gpio38
+  pin 52 (GPIO_52): device 1-002c function gpio group gpio52
+  pin 56 (GPIO_56): device a98000.serial function qup1_se6 group gpio56
+  pin 57 (GPIO_57): device a98000.serial function qup1_se6 group gpio57
+  pin 58 (GPIO_58): device a98000.serial function qup1_se6 group gpio58
+  pin 59 (GPIO_59): device a98000.serial function qup1_se6 group gpio59
+  pin 67 (GPIO_67): device 1-0005 function gpio group gpio67
+  pin 70 (GPIO_70): device regulator-edp-3p3 function gpio group gpio70
+  pin 71 (GPIO_71): device 8804000.mmc function gpio group gpio71
+  pin 74 (GPIO_74): device aux-aea0000.displayport-controller function gpio group gpio74
+  pin 91 (GPIO_91): device regulator-cam-1p8 function gpio group gpio91
+  pin 92 (GPIO_92): device gpio-keys function gpio group gpio92
+  pin 110 (GPIO_110): device leds function gpio group gpio110
+  pin 116 (GPIO_116): device wcn7850-pmu function gpio group gpio116
+  pin 117 (GPIO_117): device wcn7850-pmu function gpio group gpio117
+  pin 119 (GPIO_119): device aea0000.displayport-controller function edp0_hot group gpio119
+  pin 121 (GPIO_121): GPIO f100000.pinctrl:715
+  pin 123 (GPIO_123): GPIO f100000.pinctrl:717
+  pin 146 (GPIO_146): device 1c08000.pci function gpio group gpio146
+  pin 147 (GPIO_147): device 1c08000.pci function pcie4_clk group gpio147
+  pin 148 (GPIO_148): device 1c08000.pci function gpio group gpio148
+  pin 152 (GPIO_152): device 1bf8000.pci function gpio group gpio152
+  pin 153 (GPIO_153): device 1bf8000.pci function pcie6a_clk group gpio153
+  pin 154 (GPIO_154): device 1bf8000.pci function gpio group gpio154
+  pin 175 (GPIO_175): device regulator-rtmr1-1p8 function gpio group gpio175
+  pin 176 (GPIO_176): device 4-0008 function gpio group gpio176
+  pin 184 (GPIO_184): device 3-004f function gpio group gpio184
+  pin 186 (GPIO_186): device regulator-rtmr1-3p3 function gpio group gpio186
+  pin 188 (GPIO_188): device regulator-rtmr1-1p15 function gpio group gpio188
+  pin 191 (GPIO_191): device audio-codec function gpio group gpio191
+  pin 214 (GPIO_214): device regulator-wcn-3p3 function gpio group gpio214
+
+############ 5. SCMI protocols the firmware actually implements ############
+  no scmi debugfs (CONFIG_ARM_SCMI_DEBUG_COUNTERS/RAW off)
+
+############ 6. the ADSP power-limits channel ############
+APPS_ADSP_PWR_LMTS_GLINK_PORT exists as an rpmsg endpoint. listing only;
+writing to a firmware channel blind is not worth the risk.
+  lrwxrwxrwx. 1 root root 0 Sep  8 16:18 6800000.remoteproc:glink-edge.APPS_ADSP_PWR_LMTS_GLINK_PORT.-1.-1 -> ../../../devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.APPS_ADSP_PWR_LMTS_GLINK_PORT.-1.-1
+  name = APPS_ADSP_PWR_LMTS_GLINK_PORT
+  src = 0xffffffff
+  dst = 0xffffffff
+  driver_override = (null)
+
+############ 7. thermal zone -> cooling device bindings ############
+  gpuss-0-thermal -> devfreq-3d00000.gpu
+  gpuss-1-thermal -> devfreq-3d00000.gpu
+  gpuss-2-thermal -> devfreq-3d00000.gpu
+  gpuss-3-thermal -> devfreq-3d00000.gpu
+  gpuss-4-thermal -> devfreq-3d00000.gpu
+  gpuss-5-thermal -> devfreq-3d00000.gpu
+  gpuss-6-thermal -> devfreq-3d00000.gpu
+  gpuss-7-thermal -> devfreq-3d00000.gpu
+
+############ 8. i2c bus scan (OPT-IN, can wedge devices) ############
+--- i2c-0 ---
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+  00:                         -- 09 -- -- -- -- -- -- 
+  10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  20: -- -- -- -- -- -- -- -- 28 -- -- -- -- -- -- -- 
+  30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  70: -- -- -- -- -- -- -- --                         
+--- i2c-1 ---
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+  00:                         -- -- -- -- -- -- -- -- 
+  10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  20: -- -- -- -- -- -- -- -- -- -- -- -- UU -- -- -- 
+  30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  70: -- -- -- -- -- -- -- --                         
+--- i2c-2 ---
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+  00:                         UU 09 0a 0b 0c 0d 0e 0f 
+  10: 10 11 12 13 14 15 16 17 -- -- -- -- -- -- -- -- 
+  20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  70: -- -- -- -- -- -- -- --                         
+--- i2c-3 ---
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+  00:                         -- -- -- -- -- -- -- -- 
+  10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  30: -- -- -- -- -- -- -- -- -- -- -- 3b -- -- -- -- 
+  40: -- -- -- UU -- -- -- -- -- -- -- -- -- -- -- UU 
+  50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  70: -- -- -- -- -- -- -- --                         
+--- i2c-4 ---
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+  00:                         UU 09 0a 0b 0c 0d 0e 0f 
+  10: 10 11 12 13 14 15 16 17 -- -- -- -- -- -- -- -- 
+  20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+  70: -- -- -- -- -- -- -- --                         

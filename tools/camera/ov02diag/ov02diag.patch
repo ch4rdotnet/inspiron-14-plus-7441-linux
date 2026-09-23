@@ -1,0 +1,126 @@
+--- a/ov02diag.c
++++ b/ov02diag.c
+@@ -13,6 +13,8 @@
+ #include <media/v4l2-ctrls.h>
+ #include <media/v4l2-device.h>
+ #include <media/v4l2-fwnode.h>
++#include <linux/of.h>
++#include <linux/slab.h>
+ 
+ #define OV02E10_LINK_FREQ_360MHZ	360000000ULL
+ #define OV02E10_SCLK			36000000LL
+@@ -809,6 +811,97 @@
+ 	}
+ }
+ 
++
++/*
++ * DIAG: the sensor's avdd/dvdd rails are not described by the board and are not
++ * named anywhere in firmware, so they have to be found by trial.  Doing that in
++ * the device tree costs a kernel rebuild per guess; instead attach the supply
++ * properties to the sensor's DT node at load time, so a rail can be tried by
++ * reloading this module.
++ *
++ *   insmod ov02diag.ko avdd=vreg_l7b_2p8 dvdd=vreg_l1c_1p2
++ */
++static char *avdd_rail;
++module_param_named(avdd, avdd_rail, charp, 0444);
++MODULE_PARM_DESC(avdd, "regulator-name to attach as avdd-supply");
++
++static char *dvdd_rail;
++module_param_named(dvdd, dvdd_rail, charp, 0444);
++MODULE_PARM_DESC(dvdd, "regulator-name to attach as dvdd-supply");
++
++static struct device_node *ov02diag_find_rail(const char *want)
++{
++	struct device_node *np = NULL;
++	const char *name;
++
++	while ((np = of_find_node_with_property(np, "regulator-name"))) {
++		if (!of_property_read_string(np, "regulator-name", &name) &&
++		    !strcmp(name, want))
++			return np;
++	}
++	return NULL;
++}
++
++static void ov02diag_attach(struct device *dev, const char *prop, const char *rail)
++{
++	struct device_node *rnp;
++	struct property *pp, *existing;
++	__be32 ph;
++
++	if (!rail || !*rail || !dev->of_node)
++		return;
++
++	rnp = ov02diag_find_rail(rail);
++	if (!rnp) {
++		dev_err(dev, "DIAG: no regulator named %s\n", rail);
++		return;
++	}
++	if (!rnp->phandle) {
++		dev_err(dev, "DIAG: %s has no phandle\n", rail);
++		of_node_put(rnp);
++		return;
++	}
++
++	ph = cpu_to_be32(rnp->phandle);
++
++	pp = kzalloc(sizeof(*pp), GFP_KERNEL);
++	if (!pp) {
++		of_node_put(rnp);
++		return;
++	}
++	pp->name = kstrdup(prop, GFP_KERNEL);
++	pp->length = sizeof(ph);
++	pp->value = kmemdup(&ph, sizeof(ph), GFP_KERNEL);
++	if (!pp->name || !pp->value) {
++		kfree(pp->name);
++		kfree(pp->value);
++		kfree(pp);
++		of_node_put(rnp);
++		return;
++	}
++
++	/*
++	 * of_update_property is not exported, and the property survives a module
++	 * unload, so on a reload patch the existing phandle in place instead.
++	 * That is what makes sweeping rails possible without rebooting.
++	 */
++	existing = of_find_property(dev->of_node, prop, NULL);
++	if (existing && existing->length == sizeof(ph)) {
++		*(__be32 *)existing->value = ph;
++		dev_info(dev, "DIAG: %s -> %s (phandle 0x%x, updated)\n", prop,
++			 rail, rnp->phandle);
++		kfree(pp->name);
++		kfree(pp->value);
++		kfree(pp);
++	} else if (of_add_property(dev->of_node, pp)) {
++		dev_err(dev, "DIAG: failed to attach %s = %s\n", prop, rail);
++	} else {
++		dev_info(dev, "DIAG: %s -> %s (phandle 0x%x, added)\n", prop,
++			 rail, rnp->phandle);
++	}
++	of_node_put(rnp);
++}
++
+ static int ov02e10_probe(struct i2c_client *client)
+ {
+ 	struct ov02e10 *ov02e10;
+@@ -821,6 +914,9 @@
+ 
+ 	ov02e10->dev = &client->dev;
+ 
++	ov02diag_attach(&client->dev, "avdd-supply", avdd_rail);
++	ov02diag_attach(&client->dev, "dvdd-supply", dvdd_rail);
++
+ 	ov02e10->img_clk = devm_v4l2_sensor_clk_get(ov02e10->dev, NULL);
+ 	if (IS_ERR(ov02e10->img_clk))
+ 		return dev_err_probe(ov02e10->dev, PTR_ERR(ov02e10->img_clk),
+@@ -952,5 +1048,5 @@
+ MODULE_AUTHOR("Hans de Goede <hdegoede@redhat.com>");
+ MODULE_AUTHOR("Alan Stern <stern@rowland.harvard.edu>");
+ MODULE_AUTHOR("Bryan O'Donoghue <bryan.odonoghue@linaro.org>");
+-MODULE_DESCRIPTION("OmniVision OV02E10 sensor driver");
++MODULE_DESCRIPTION("OV02E10 with runtime-selectable analog rails (diagnostic)");
+ MODULE_LICENSE("GPL");

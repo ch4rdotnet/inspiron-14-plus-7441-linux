@@ -1,0 +1,326 @@
+From 8c76eb57b6f9d4e1d0b7337e61e85be0c3f52601 Mon Sep 17 00:00:00 2001
+From: Charlie Garner <charlie@akao.au>
+Date: Tue, 08 Sep 2026 21:40:00 +0930
+Subject: [PATCH 5/6] arm64: dts: qcom: hamoa: add camss, camcc and CCI
+
+Nothing of the camera block is described for x1e80100, so neither the ISP nor
+the i2c buses the sensors sit on are usable.
+
+camss and camcc are taken from the binding examples, with one correction: the
+CSIPHY register windows are 8 KB, not the 4 KB the binding example uses. The
+driver programs this SoC's CSIPHYs at an 0x1000 offset (see csiphy_init(), which
+sets regs->offset = 0x1000 for CAMSS_X1E80100), so with a 4 KB mapping *any*
+attempt to stream oopses in csiphy_reset():
+
+	Unable to handle kernel paging request at ffff80008208e000
+	  csiphy_reset+0x30/0x70 [qcom_camss]
+	  csiphy_set_power+0x94/0x1b0 [qcom_camss]
+
+8 KB also matches the layout: 0x0ace4000/6000/8000 are contiguous on an 8 KB
+stride with csiphy4 at 0x0acec000, leaving the gap where csiphy3 would sit, and
+it is what this platform's ACPI tables report for those windows.
+
+CCI needed more work. The register bases come from the ACPI tables the UEFI
+hands to Windows (device \_SB.CAMP, _HID QCOM0C32), cross-checked against the
+camss apertures - eight of the addresses DSDT lists are already in the camss reg
+list, so it is describing the same block.
+
+The interrupts were measured rather than inferred: each controller was reset and
+the GIC line it raised was observed. That matters, because the address layout
+matches sm8450/sm8550/sm8650 while the interrupt assignment matches sa8775p, so
+reasoning from either SoC alone gets half of it wrong.
+
+	cci0  0x0ac15000  GIC_SPI 460
+	cci1  0x0ac16000  GIC_SPI 271
+
+Both read HW_VERSION 0x10070000 and complete a reset via those interrupts.
+
+DSDT also lists 0x0ac13000, which reads 0x00060905 and never completes a reset -
+some other block, not a CCI - and a third SPI, 459, belonging to neither.
+
+cci1's second master comes out on gpio235/236 (function aon_cci) rather than on
+the cci_i2c pins, so both of its buses are described.
+---
+diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
+--- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
++++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
+@@ -6,6 +6,7 @@
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
+ #include <dt-bindings/clock/qcom,sm8450-videocc.h>
++#include <dt-bindings/clock/qcom,x1e80100-camcc.h>
+ #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
+ #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+ #include <dt-bindings/clock/qcom,x1e80100-gpucc.h>
+@@ -5550,6 +5551,230 @@
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		camss: isp@acb7000 {
++			compatible = "qcom,x1e80100-camss";
++
++			reg = <0 0x0acb7000 0 0x2000>,
++			      <0 0x0acb9000 0 0x2000>,
++			      <0 0x0acbb000 0 0x2000>,
++			      <0 0x0acc6000 0 0x1000>,
++			      <0 0x0acca000 0 0x1000>,
++			      <0 0x0acb6000 0 0x1000>,
++			      <0 0x0ace4000 0 0x2000>,
++			      <0 0x0ace6000 0 0x2000>,
++			      <0 0x0ace8000 0 0x2000>,
++			      <0 0x0acec000 0 0x2000>,
++			      <0 0x0acf6000 0 0x1000>,
++			      <0 0x0acf7000 0 0x1000>,
++			      <0 0x0acf8000 0 0x1000>,
++			      <0 0x0ac62000 0 0x4000>,
++			      <0 0x0ac71000 0 0x4000>,
++			      <0 0x0acc7000 0 0x2000>,
++			      <0 0x0accb000 0 0x2000>;
++			reg-names = "csid0", "csid1", "csid2",
++				    "csid_lite0", "csid_lite1", "csid_wrapper",
++				    "csiphy0", "csiphy1", "csiphy2", "csiphy4",
++				    "csitpg0", "csitpg1", "csitpg2",
++				    "vfe0", "vfe1", "vfe_lite0", "vfe_lite1";
++
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
++				 <&camcc CAM_CC_CORE_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
++				 <&camcc CAM_CC_CPHY_RX_CLK_SRC>,
++				 <&camcc CAM_CC_CSID_CLK>,
++				 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
++				 <&camcc CAM_CC_CSIPHY0_CLK>,
++				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY1_CLK>,
++				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY2_CLK>,
++				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY4_CLK>,
++				 <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
++				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
++				 <&gcc GCC_CAMERA_SF_AXI_CLK>,
++				 <&camcc CAM_CC_IFE_0_CLK>,
++				 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_1_CLK>,
++				 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
++			clock-names = "camnoc_nrt_axi", "camnoc_rt_axi", "core_ahb",
++				      "cpas_ahb", "cpas_fast_ahb", "cpas_vfe0",
++				      "cpas_vfe1", "cpas_vfe_lite", "cphy_rx_clk_src",
++				      "csid", "csid_csiphy_rx", "csiphy0",
++				      "csiphy0_timer", "csiphy1", "csiphy1_timer",
++				      "csiphy2", "csiphy2_timer", "csiphy4",
++				      "csiphy4_timer", "gcc_axi_hf", "gcc_axi_sf",
++				      "vfe0", "vfe0_fast_ahb", "vfe1",
++				      "vfe1_fast_ahb", "vfe_lite", "vfe_lite_ahb",
++				      "vfe_lite_cphy_rx", "vfe_lite_csid";
++
++			interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 431 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "csid0", "csid1", "csid2",
++					  "csid_lite0", "csid_lite1",
++					  "csiphy0", "csiphy1", "csiphy2", "csiphy4",
++					  "vfe0", "vfe1", "vfe_lite0", "vfe_lite1";
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++					 &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
++					<&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&mmss_noc MASTER_CAMNOC_ICP QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "ahb", "hf_mnoc", "sf_mnoc", "sf_icp_mnoc";
++
++			iommus = <&apps_smmu 0x800 0x60>,
++				 <&apps_smmu 0x860 0x60>,
++				 <&apps_smmu 0x1800 0x60>,
++				 <&apps_smmu 0x1860 0x60>,
++				 <&apps_smmu 0x18e0 0x00>,
++				 <&apps_smmu 0x1980 0x20>,
++				 <&apps_smmu 0x1900 0x00>,
++				 <&apps_smmu 0x19a0 0x20>;
++
++			power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
++					<&camcc CAM_CC_IFE_1_GDSC>,
++					<&camcc CAM_CC_TITAN_TOP_GDSC>;
++			power-domain-names = "ife0", "ife1", "top";
++
++			status = "disabled";
++		};
++
++		/*
++		 * CCI (Camera Control Interface) - the i2c masters the image sensors
++		 * hang off.  Not described upstream for x1e80100.  The register bases
++		 * came from the DSDT this machine's UEFI hands to Windows (device
++		 * \_SB.CAMP, _HID QCOM0C32); the interrupts were then measured on the
++		 * hardware rather than guessed, by resetting each controller and
++		 * watching which GIC SPI it raised.
++		 *
++		 * Confirmed: both apertures read HW_VERSION 0x10070000 and complete a
++		 * reset via the interrupts below.  The DSDT also lists 0x0ac13000
++		 * (reads 0x00060905, resets never complete - not a CCI) and a third
++		 * SPI, 459, which belongs to neither of these.
++		 */
++		cci0: cci@ac15000 {
++			compatible = "qcom,msm8996-cci";
++			reg = <0 0x0ac15000 0 0x1000>;
++
++			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
++
++			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
++
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_0_CLK>;
++			clock-names = "camnoc_axi",
++				      "cpas_ahb",
++				      "cci";
++
++			pinctrl-0 = <&cci0_i2c0_default &cci0_i2c1_default>;
++			pinctrl-names = "default";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			status = "disabled";
++
++			cci0_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <400000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci0_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <400000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		cci1: cci@ac16000 {
++			compatible = "qcom,msm8996-cci";
++			reg = <0 0x0ac16000 0 0x1000>;
++
++			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
++
++			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
++
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_NRT_CLK>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_1_CLK>;
++			clock-names = "camnoc_axi",
++				      "cpas_ahb",
++				      "cci";
++
++			pinctrl-0 = <&cci1_i2c0_default &aon_cci_default>;
++			pinctrl-names = "default";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			status = "disabled";
++
++			cci1_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <400000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			/*
++			 * Master 1 comes out on the always-on pins (gpio235/236,
++			 * function aon_cci) rather than on cci_i2c, and that is
++			 * where the camera module sits.
++			 */
++			cci1_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <400000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		camcc: clock-controller@ade0000 {
++			compatible = "qcom,x1e80100-camcc";
++			reg = <0 0x0ade0000 0 0x20000>;
++
++			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK_A>,
++				 <&sleep_clk>;
++
++			power-domains = <&rpmhpd RPMHPD_MXC>,
++					<&rpmhpd RPMHPD_MMCX>;
++			required-opps = <&rpmhpd_opp_low_svs>,
++					<&rpmhpd_opp_low_svs>;
++
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
+ 		mdss: display-subsystem@ae00000 {
+ 			compatible = "qcom,x1e80100-mdss";
+ 			reg = <0 0x0ae00000 0 0x1000>;
+@@ -6131,6 +6356,38 @@
+ 			gpio-ranges = <&tlmm 0 0 239>;
+ 			wakeup-parent = <&pdc>;
+ 
++			/* cci1 master 1: the camera module's i2c bus */
++			aon_cci_default: aon-cci-default-state {
++				/* SDA, SCL */
++				pins = "gpio235", "gpio236";
++				function = "aon_cci";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci0_i2c0_default: cci0-i2c0-default-state {
++				/* SDA, SCL */
++				pins = "gpio101", "gpio102";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci0_i2c1_default: cci0-i2c1-default-state {
++				/* SDA, SCL */
++				pins = "gpio103", "gpio104";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci1_i2c0_default: cci1-i2c0-default-state {
++				/* SDA, SCL */
++				pins = "gpio105", "gpio106";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
+ 			edp0_hpd_default: edp0-hpd-default-state {
+ 				pins = "gpio119";
+ 				function = "edp0_hot";
+-- 
+2.51.0

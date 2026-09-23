@@ -1,0 +1,47 @@
+From 051c3de5047f732a5bf92fdafb5dda3b86db8358 Mon Sep 17 00:00:00 2001
+From: Charlie Garner <charlie@akao.au>
+Date: Tue, 08 Sep 2026 19:20:00 +0930
+Subject: [PATCH 4/6] clk: qcom: camcc-x1e80100: fix MCLK rates for the 38.4 MHz XO
+
+The MCLK frequency table gives every rate a pre-divider that assumes a 19.2 MHz
+reference, but bi_tcxo is 38.4 MHz on this SoC:
+
+	xo-board            76800000
+	  bi_tcxo           38400000
+	    cam_cc_mclk4_clk_src   48000000
+
+So a pre-divider of 1 produces 38.4 MHz rather than 19.2, and every rate in the
+table comes out at exactly twice its label - asking for 24 MHz yields 48 MHz.
+Asking for 19.2 MHz fails outright with -EINVAL, because no table entry can
+produce it.
+
+That makes the SoC unusable with any sensor that requires a 19.2 MHz MCLK.
+ov02e10, for one, refuses to probe at any other rate:
+
+	freq = clk_get_rate(ov02e10->img_clk);
+	if (freq != OV02E10_MCLK)
+		return dev_err_probe(..., "external clock %lu is not supported", freq);
+
+Halve the divider on the 19.2 MHz entry so it is reachable. Only that entry is
+touched here; the PLL-sourced rates are left alone as they have not been
+measured.
+---
+diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
+--- a/drivers/clk/qcom/camcc-x1e80100.c
++++ b/drivers/clk/qcom/camcc-x1e80100.c
+@@ -926,7 +926,12 @@
+ };
+ 
+ static const struct freq_tbl ftbl_cam_cc_mclk0_clk_src[] = {
+-	F(19200000, P_BI_TCXO, 1, 0, 0),
++	/*
++	 * bi_tcxo is 38.4 MHz on this SoC, not 19.2, so a pre-divider of 1
++	 * yields 38.4 MHz and a request for 19.2 MHz fails outright.  Sensors
++	 * that require a 19.2 MHz MCLK (ov02e10, for one) cannot probe.
++	 */
++	F(19200000, P_BI_TCXO, 2, 0, 0),
+ 	F(24000000, P_CAM_CC_PLL2_OUT_MAIN, 10, 1, 4),
+ 	F(68571429, P_CAM_CC_PLL2_OUT_MAIN, 14, 0, 0),
+ 	{ }
+-- 
+2.51.0

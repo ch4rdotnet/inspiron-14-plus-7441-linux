@@ -1,0 +1,157 @@
+From 9df0bb85b8803f513627f7689ac185e793ad9d8d Mon Sep 17 00:00:00 2001
+From: Charlie Garner <charlie@akao.au>
+Date: Tue, 8 Sep 2026 21:40:00 +0930
+Subject: [PATCH 6/6] arm64: dts: qcom: x1-dell-thena: add the front camera
+
+The board file already described the camera's regulator and its mclk/reset pins,
+but nothing referenced them and there was no sensor node.
+
+The sensor is an OmniVision OV02E10 on cci1 master 1 - the always-on i2c pins -
+at address 0x10. It is named in the vendor driver package
+(com.qti.sensormodule.ov02e10.bin) and confirmed on the bus: it answers with
+8-bit register addressing, and its width and height registers read 0x0788 by
+0x0440, which is the 1928x1088 mode the upstream driver already supports.
+
+It only responds once MCLK4 is running. gpio100's "cam_aon" function is MCLK4 -
+sm8550 spells the same function cam_aon_mclk4 - and the sensor needs that clock
+at 19.2 MHz, which depends on the camcc fix earlier in this series.
+
+With this the sensor probes, enumerates in the media graph, accepts its full
+register table and the stream-on write, and the RDI write master is programmed.
+Frames do not yet arrive: the CSIPHY never locks. csiphy0 and the lane mapping
+here are unverified, as are avdd/dvdd - see the comment on the sensor node.
+---
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 113 ++++++++++++++++++++
+ 1 file changed, 113 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index 162c97eee..c7ac670a3 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -266,6 +266,14 @@ vreg_cam_1p8: regulator-cam-1p8 {
+ 		gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 
++		/*
++		 * Bring-up only.  Nothing consumes this rail yet - there is no
++		 * sensor node - so it would otherwise stay off and the sensor
++		 * would not ACK on the CCI bus.  Drop this once a sensor node
++		 * exists to reference it.
++		 */
++		regulator-always-on;
++
+ 		pinctrl-0 = <&cam_ldo_en>;
+ 		pinctrl-names = "default";
+ 	};
+@@ -1656,3 +1664,108 @@ &usb_mp_qmpphy1 {
+ 
+ 	status = "okay";
+ };
++
++/*
++ * Both CCI controllers are real and come up cleanly, so enable them.  No sensor
++ * is described yet: the board wires its camera to the always-on i2c pins
++ * (gpio235/236), and nothing drives those, so scanning these buses finds
++ * nothing.  See docs/camera.md.
++ */
++&cci0 {
++	status = "okay";
++};
++
++&cci1 {
++	status = "okay";
++};
++
++/*
++ * EXPERIMENT, not for upstream. Enables the camera subsystem to find out how
++ * far it gets. The sensor is NOT described -- it lives on a CCI bus, and there
++ * is no CCI support for this SoC upstream (no compatible in qcom,i2c-cci.yaml,
++ * no node in hamoa.dtsi, and the register base is not published anywhere).
++ *
++ * The csiphy supplies are a GUESS: vreg_l2c_0p8 and vreg_l2i_1p2 are the only
++ * rails of the right voltages with no other consumer. Not from a schematic.
++ */
++&camss {
++	vdd-csiphy-0p8-supply = <&vreg_l2c_0p8>;
++	vdd-csiphy-1p2-supply = <&vreg_l2i_1p2>;
++
++	status = "okay";
++
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		/*
++		 * Which CSIPHY the module's lanes land on is not established -
++		 * nothing in the DSDT or the board file says.  csiphy0 is a
++		 * first guess; if the sensor probes but never streams, this is
++		 * the thing to walk through (csiphy1, 2, 4).
++		 */
++		port@0 {
++			reg = <0>;
++
++			csiphy0_ep: endpoint {
++				data-lanes = <0 1>;
++				remote-endpoint = <&ov02e10_ep>;
++			};
++		};
++	};
++};
++
++&cci1_i2c1 {
++	/*
++	 * OmniVision OV02E10, 1928x1088.  Identified from the Dell driver pack
++	 * (com.qti.sensormodule.ov02e10.bin) and confirmed on the bus: replies
++	 * at 0x10 with 8-bit register addressing, and its width/height
++	 * registers read 0x0788 x 0x0440.
++	 *
++	 * It only answers once MCLK4 runs - gpio100's "cam_aon" function is
++	 * MCLK4, which sm8550 spells out as "cam_aon_mclk4".  The driver
++	 * insists on exactly 19.2 MHz, which needs the camcc fix in this same
++	 * series.
++	 */
++	camera@10 {
++		compatible = "ovti,ov02e10";
++		reg = <0x10>;
++
++		clocks = <&camcc CAM_CC_MCLK4_CLK>;
++		assigned-clocks = <&camcc CAM_CC_MCLK4_CLK>;
++		assigned-clock-rates = <19200000>;
++
++		/*
++		 * dovdd is the board's own camera rail and is known good - the
++		 * sensor enumerates and takes its whole register table on it.
++		 *
++		 * avdd and dvdd are NOT established.  Nothing in the board file
++		 * or the DSDT names them (the vendor stack programs the PMIC
++		 * directly), so these are simply the unused LDOs at plausible
++		 * voltages.  They were tried against every other unused rail at
++		 * 2.8-3.0 V and 1.2 V and made no difference: the sensor still
++		 * accepts stream-on and the CSIPHY still never locks.  Kept
++		 * because the sensor plainly needs an analog supply from
++		 * somewhere and these are harmless, but treat them as unverified.
++		 */
++		dovdd-supply = <&vreg_cam_1p8>;
++		avdd-supply = <&vreg_l7b_2p8>;
++		dvdd-supply = <&vreg_l1c_1p2>;
++
++		reset-gpios = <&tlmm 237 GPIO_ACTIVE_LOW>;
++
++		pinctrl-0 = <&cam_rgb_default>;
++		pinctrl-names = "default";
++
++		orientation = <0>;
++		rotation = <0>;
++
++		port {
++			ov02e10_ep: endpoint {
++				data-lanes = <1 2>;
++				link-frequencies = /bits/ 64 <360000000>;
++				remote-endpoint = <&csiphy0_ep>;
++			};
++		};
++	};
++};
+-- 
+2.55.0
+

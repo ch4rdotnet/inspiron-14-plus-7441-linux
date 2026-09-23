@@ -1,0 +1,270 @@
+=== pinctrl controllers ===
+  6e80000.pinctrl
+  c42d000.spmi:pmic@0:gpio@8800
+  c42d000.spmi:pmic@1:gpio@8800
+  c42d000.spmi:pmic@2:gpio@8800
+  c42d000.spmi:pmic@3:gpio@8800
+  c42d000.spmi:pmic@4:gpio@8800
+  c42d000.spmi:pmic@5:gpio@8800
+  c42d000.spmi:pmic@6:gpio@8800
+  c42d000.spmi:pmic@8:gpio@8800
+  c42d000.spmi:pmic@9:gpio@8800
+  f100000.pinctrl
+  pinctrl-devices
+  pinctrl-handles
+  pinctrl-maps
+
+=== PMIC GPIO controllers in the DT (candidates for the PWM pad) ===
+
+=== any pin currently in a PWM-ish function? ===
+
+=== full pinmux for PMIC gpio controllers (look for func3 / unclaimed) ===
+  --- c42d000.spmi:pmic@0:gpio@8800
+    registered pins: 6
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@0:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@0:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@0:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@0:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@0:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@0:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@1:gpio@8800
+    registered pins: 12
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@1:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@1:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@1:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@1:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@1:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@1:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@1:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@1:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@1:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@1:gpio@8800 
+    pin 10 (gpio11) 10:c42d000.spmi:pmic@1:gpio@8800 
+    pin 11 (gpio12) 11:c42d000.spmi:pmic@1:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+    pin 9 (gpio10): 2-0008 c42d000.spmi:pmic@1:gpio@8800:527 function normal group gpio10
+    pin 10 (gpio11): regulator-rtmr0-3p3 c42d000.spmi:pmic@1:gpio@8800:528 function normal group gpio11
+  --- c42d000.spmi:pmic@2:gpio@8800
+    registered pins: 8
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@2:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@2:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@2:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@2:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@2:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@2:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@2:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@2:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@3:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@3:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@3:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@3:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@3:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@3:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@3:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@3:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@3:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@3:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@3:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@4:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@4:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@4:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@4:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@4:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@4:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@4:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@4:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@4:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@4:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@4:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@5:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@5:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@5:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@5:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@5:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@5:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@5:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@5:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@5:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@5:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@5:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+    pin 7 (gpio8): regulator-rtmr0-1p15 c42d000.spmi:pmic@5:gpio@8800:565 function normal group gpio8
+  --- c42d000.spmi:pmic@6:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@6:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@6:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@6:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@6:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@6:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@6:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@6:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@6:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@6:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@6:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@8:gpio@8800
+    registered pins: 8
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@8:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@8:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@8:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@8:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@8:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@8:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@8:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@8:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@9:gpio@8800
+    registered pins: 8
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@9:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@9:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@9:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@9:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@9:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@9:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@9:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@9:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+    pin 7 (gpio8): regulator-rtmr0-1p8 c42d000.spmi:pmic@9:gpio@8800:593 function normal group gpio8
+  --- c42d000.spmi:pmic@0:gpio@8800
+    registered pins: 6
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@0:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@0:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@0:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@0:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@0:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@0:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@1:gpio@8800
+    registered pins: 12
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@1:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@1:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@1:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@1:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@1:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@1:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@1:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@1:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@1:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@1:gpio@8800 
+    pin 10 (gpio11) 10:c42d000.spmi:pmic@1:gpio@8800 
+    pin 11 (gpio12) 11:c42d000.spmi:pmic@1:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+    pin 9 (gpio10): 2-0008 c42d000.spmi:pmic@1:gpio@8800:527 function normal group gpio10
+    pin 10 (gpio11): regulator-rtmr0-3p3 c42d000.spmi:pmic@1:gpio@8800:528 function normal group gpio11
+  --- c42d000.spmi:pmic@2:gpio@8800
+    registered pins: 8
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@2:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@2:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@2:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@2:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@2:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@2:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@2:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@2:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@3:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@3:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@3:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@3:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@3:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@3:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@3:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@3:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@3:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@3:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@3:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@4:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@4:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@4:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@4:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@4:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@4:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@4:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@4:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@4:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@4:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@4:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@5:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@5:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@5:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@5:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@5:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@5:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@5:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@5:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@5:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@5:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@5:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+    pin 7 (gpio8): regulator-rtmr0-1p15 c42d000.spmi:pmic@5:gpio@8800:565 function normal group gpio8
+  --- c42d000.spmi:pmic@6:gpio@8800
+    registered pins: 10
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@6:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@6:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@6:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@6:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@6:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@6:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@6:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@6:gpio@8800 
+    pin 8 (gpio9) 8:c42d000.spmi:pmic@6:gpio@8800 
+    pin 9 (gpio10) 9:c42d000.spmi:pmic@6:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@8:gpio@8800
+    registered pins: 8
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@8:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@8:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@8:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@8:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@8:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@8:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@8:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@8:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+  --- c42d000.spmi:pmic@9:gpio@8800
+    registered pins: 8
+    pin 0 (gpio1) 0:c42d000.spmi:pmic@9:gpio@8800 
+    pin 1 (gpio2) 1:c42d000.spmi:pmic@9:gpio@8800 
+    pin 2 (gpio3) 2:c42d000.spmi:pmic@9:gpio@8800 
+    pin 3 (gpio4) 3:c42d000.spmi:pmic@9:gpio@8800 
+    pin 4 (gpio5) 4:c42d000.spmi:pmic@9:gpio@8800 
+    pin 5 (gpio6) 5:c42d000.spmi:pmic@9:gpio@8800 
+    pin 6 (gpio7) 6:c42d000.spmi:pmic@9:gpio@8800 
+    pin 7 (gpio8) 7:c42d000.spmi:pmic@9:gpio@8800 
+    Pinmux settings per pin
+    Format: pin (name): mux_owner gpio_owner hog?
+    pin 7 (gpio8): regulator-rtmr0-1p8 c42d000.spmi:pmic@9:gpio@8800:593 function normal group gpio8
+
+=== TLMM gpio74 (edp_bl_en) current state ===
+   gpio74  : out high func0 2mA no pull
+
+=== is the pmk8550 pwm node present but disabled? ===

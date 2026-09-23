@@ -1,0 +1,17 @@
+# from ./scripts/get_maintainer.pl on the regenerated series (base 32afff1e816e)
+# plus Abel Vesa, added as ARM/QUALCOMM SUPPORT reviewer in linux-next MAINTAINERS
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Abel Vesa <abelvesa@kernel.org>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: Val Packett <val@packett.cool>
+Cc: Laurentiu Tudor <laurentiu.tudor1@dell.com>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+
+# unverified so not sent: laurentiu.tudor1@dell.com was last used in 2025, and his 2025 list replies came from this address.
+# Cc: Laurentiu Tudor <tudor.laurentiu.oss@gmail.com>

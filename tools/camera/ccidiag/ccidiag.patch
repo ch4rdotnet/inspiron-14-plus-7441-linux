@@ -1,0 +1,218 @@
+--- a/ccidiag.c
++++ b/ccidiag.c
+@@ -11,6 +11,9 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
++#include <linux/delay.h>
++#include <linux/irqdomain.h>
++#include <linux/of_irq.h>
+ 
+ #define CCI_HW_VERSION				0x0
+ #define CCI_RESET_CMD				0x004
+@@ -225,21 +228,123 @@
+ 	return 0;
+ }
+ 
++
++/*
++ * DIAG: the DSDT lists three SPIs for the camera block but does not say which
++ * belongs to which aperture.  Rather than guess the permutation one kernel
++ * build at a time, map every candidate onto the GIC ourselves and see which one
++ * the reset pulse actually raises.
++ */
++static const u32 cci_diag_spis[] = { 271, 459, 460, 461, 462, 270, 272 };
++#define CCI_DIAG_N ARRAY_SIZE(cci_diag_spis)
++static int cci_diag_virq[CCI_DIAG_N];
++static atomic_t cci_diag_hits[CCI_DIAG_N];
++
++static irqreturn_t cci_diag_isr(int irq, void *data)
++{
++	atomic_inc((atomic_t *)data);
++	return IRQ_NONE;	/* let the real handler, if any, also see it */
++}
++
++static void cci_diag_hook(struct cci *cci)
++{
++	struct device_node *par;
++	struct irq_fwspec fw;
++	int i;
++
++	par = of_irq_find_parent(cci->dev->of_node);
++	if (!par) {
++		dev_err(cci->dev, "DIAG: no interrupt parent\n");
++		return;
++	}
++
++	for (i = 0; i < CCI_DIAG_N; i++) {
++		memset(&fw, 0, sizeof(fw));
++		fw.fwnode = of_fwnode_handle(par);
++		fw.param_count = 3;
++		fw.param[0] = 0;			/* GIC_SPI */
++		fw.param[1] = cci_diag_spis[i];
++		fw.param[2] = IRQ_TYPE_EDGE_RISING;
++
++		cci_diag_virq[i] = irq_create_fwspec_mapping(&fw);
++		if (cci_diag_virq[i] <= 0) {
++			cci_diag_virq[i] = 0;
++			continue;
++		}
++		atomic_set(&cci_diag_hits[i], 0);
++		if (request_irq(cci_diag_virq[i], cci_diag_isr, IRQF_SHARED,
++				"ccidiag", &cci_diag_hits[i])) {
++			dev_info(cci->dev, "DIAG: SPI %u already claimed, skipping\n",
++				 cci_diag_spis[i]);
++			cci_diag_virq[i] = 0;
++		}
++	}
++	of_node_put(par);
++}
++
++static void cci_diag_report(struct cci *cci)
++{
++	int i;
++
++	for (i = 0; i < CCI_DIAG_N; i++) {
++		if (!cci_diag_virq[i])
++			continue;
++		if (atomic_read(&cci_diag_hits[i]))
++			dev_err(cci->dev, "DIAG: *** SPI %u (virq %d) FIRED %d time(s) ***\n",
++				cci_diag_spis[i], cci_diag_virq[i],
++				atomic_read(&cci_diag_hits[i]));
++		free_irq(cci_diag_virq[i], &cci_diag_hits[i]);
++		cci_diag_virq[i] = 0;
++	}
++}
++
+ static int cci_reset(struct cci *cci)
+ {
+ 	/*
+ 	 * we reset the whole controller, here and for implicity use
+ 	 * master[0].xxx for waiting on it.
+ 	 */
++	u32 ver, st;
++	int i;
++
++	ver = readl(cci->base + CCI_HW_VERSION);
++	dev_info(cci->dev, "DIAG: HW_VERSION = 0x%08x  (irq=%d)\n", ver, cci->irq);
++	if (ver == 0 || ver == 0xffffffff) {
++		dev_err(cci->dev, "DIAG: version register is 0x%08x - this is not a live CCI aperture\n",
++			ver);
++		return -ENODEV;
++	}
++
+ 	reinit_completion(&cci->master[0].irq_complete);
+ 	writel(CCI_RESET_CMD_MASK, cci->base + CCI_RESET_CMD);
+ 
+ 	if (!wait_for_completion_timeout(&cci->master[0].irq_complete,
+ 					 CCI_TIMEOUT)) {
+-		dev_err(cci->dev, "CCI reset timeout\n");
++		/*
++		 * No interrupt.  Poll the status register: if RST_DONE_ACK is
++		 * set the controller did reset and only the IRQ routing is
++		 * wrong, which is a DT problem rather than a dead aperture.
++		 */
++		for (i = 0; i < 100; i++) {
++			st = readl(cci->base + CCI_IRQ_STATUS_0);
++			if (st & CCI_IRQ_STATUS_0_RST_DONE_ACK)
++				break;
++			usleep_range(1000, 2000);
++		}
++		st = readl(cci->base + CCI_IRQ_STATUS_0);
++		if (st & CCI_IRQ_STATUS_0_RST_DONE_ACK) {
++			dev_err(cci->dev, "DIAG: no IRQ, but RST_DONE_ACK IS set (status 0x%08x) -> registers good, INTERRUPT IS WRONG\n",
++				st);
++			writel(0x1, cci->base + CCI_IRQ_GLOBAL_CLEAR_CMD);
++			writel(0x0, cci->base + CCI_IRQ_GLOBAL_CLEAR_CMD);
++			return -ETIMEDOUT;
++		}
++		dev_err(cci->dev, "DIAG: no IRQ and RST_DONE_ACK not set (status 0x%08x) -> reset never completed\n",
++			st);
+ 		return -ETIMEDOUT;
+ 	}
+ 
++	dev_info(cci->dev, "DIAG: *** RESET COMPLETED VIA INTERRUPT - CCI IS UP ***\n");
+ 	return 0;
+ }
+ 
+@@ -582,6 +687,41 @@
+ 		goto disable_clocks;
+ 	cci->irq = ret;
+ 
++	{
++		struct device_node *par = of_irq_find_parent(dev->of_node);
++		struct irq_fwspec fw = {};
++		u32 spi = 0;
++
++		if (r->start == 0x0ac15000)
++			spi = 460;
++		else if (r->start == 0x0ac16000)
++			spi = 271;
++
++		if (!spi || !par) {
++			/*
++			 * Not a CCI.  Return success anyway so the driver core
++			 * keeps this node's default pinctrl applied - that is
++			 * what muxes gpio235/236 to aon_cci, the pins the board
++			 * actually wires the sensor to.
++			 */
++			dev_info(dev, "DIAG: %pa is not a CCI; holding it bound to keep its pinmux\n",
++				 &r->start);
++			if (par)
++				of_node_put(par);
++			return 0;
++		}
++
++		fw.fwnode = of_fwnode_handle(par);
++		fw.param_count = 3;
++		fw.param[0] = 0;			/* GIC_SPI */
++		fw.param[1] = spi;
++		fw.param[2] = IRQ_TYPE_EDGE_RISING;
++		cci->irq = irq_create_fwspec_mapping(&fw);
++		of_node_put(par);
++
++		dev_info(dev, "DIAG: using SPI %u (virq %d) instead of DT irq\n",
++			 spi, cci->irq);
++	}
+ 	ret = devm_request_irq(dev, cci->irq, cci_isr, 0, dev_name(dev), cci);
+ 	if (ret < 0) {
+ 		dev_err(dev, "request_irq failed, ret: %d\n", ret);
+@@ -595,6 +735,29 @@
+ 	if (ret < 0)
+ 		goto error;
+ 
++	/*
++	 * DIAG: CCI v2 has two masters per controller - four buses across the two
++	 * controllers - but only three cci_i2c pin pairs exist (gpio101-106).  The
++	 * fourth master has to come out somewhere, and the board's camera i2c is on
++	 * gpio235/236 (aon_cci).  DT only declares one bus for cci1, so master 1 was
++	 * never registered and never scanned.  Force it here.
++	 */
++	if (r->start == 0x0ac16000 && !cci->master[1].cci) {
++		struct cci_master *m = &cci->master[1];
++
++		m->adap.quirks = &cci->data->quirks;
++		m->adap.algo = &cci_algo;
++		m->adap.dev.parent = dev;
++		m->adap.dev.of_node = NULL;
++		m->master = 1;
++		m->cci = cci;
++		i2c_set_adapdata(&m->adap, m);
++		snprintf(m->adap.name, sizeof(m->adap.name), "Qualcomm-CCI-m1");
++		m->mode = I2C_MODE_STANDARD;
++		init_completion(&m->irq_complete);
++		dev_info(dev, "DIAG: force-registering cci1 master 1\n");
++	}
++
+ 	ret = cci_init(cci);
+ 	if (ret < 0)
+ 		goto error;
+@@ -832,7 +995,7 @@
+ 	.probe  = cci_probe,
+ 	.remove = cci_remove,
+ 	.driver = {
+-		.name = "i2c-qcom-cci",
++		.name = "ccidiag",
+ 		.of_match_table = cci_dt_match,
+ 		.pm = &qcom_cci_pm,
+ 	},

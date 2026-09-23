@@ -1,0 +1,292 @@
+debug sites on: 166
+
+===== trace (bwmon/adreno noise removed) =====
+  [ 6054.414499] scmi_core: Requesting SCMI device (cpufreq) for protocol 13
+  [ 6054.414506] arm-scmi arm-scmi.0.auto: Requested device (cpufreq) for protocol 0x13
+  [ 6054.414583] scmi_core: (/firmware/scmi) Created SCMI device 'scmi_dev.4' for protocol 0x13 (cpufreq)
+  [ 6054.414632] arm-scmi arm-scmi.0.auto: Device scmi_dev.4 (cpufreq) is now about to be BOUND.
+  [ 6054.414640] cpufreq: trying to register driver scmi
+  [ 6054.414785] cpufreq: cpufreq: supports frequency invariance
+  [ 6054.414788] cpu cpu0: cpufreq_add_dev: adding CPU0
+  [ 6054.414789] cpufreq: cpufreq_online: bringing CPU0 online
+  [ 6054.414814] cpu cpu0: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.414819] cpu cpu0: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.414829] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.414866] cpu cpu0: [0][NCC0]:: Registered OPP[0] 710400000
+  [ 6054.414868] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.414906] cpu cpu0: [0][NCC0]:: Registered OPP[1] 806400000
+  [ 6054.414908] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.414943] cpu cpu0: [0][NCC0]:: Registered OPP[2] 998400000
+  [ 6054.414945] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.414976] cpu cpu0: [0][NCC0]:: Registered OPP[3] 1190400000
+  [ 6054.414978] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415009] cpu cpu0: [0][NCC0]:: Registered OPP[4] 1440000000
+  [ 6054.415011] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415039] cpu cpu0: [0][NCC0]:: Registered OPP[5] 1670400000
+  [ 6054.415040] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415070] cpu cpu0: [0][NCC0]:: Registered OPP[6] 1920000000
+  [ 6054.415071] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415102] cpu cpu0: [0][NCC0]:: Registered OPP[7] 2188800000
+  [ 6054.415104] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415132] cpu cpu0: [0][NCC0]:: Registered OPP[8] 2515200000
+  [ 6054.415133] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415163] cpu cpu0: [0][NCC0]:: Registered OPP[9] 2707200000
+  [ 6054.415164] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415199] cpu cpu0: [0][NCC0]:: Registered OPP[10] 2976000000
+  [ 6054.415201] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415227] cpu cpu0: [0][NCC0]:: Registered OPP[11] 3206400000
+  [ 6054.415228] cpu cpu0: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.415258] cpu cpu0: [0][NCC0]:: Registered OPP[12] 3417600000
+  [ 6054.415274] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000000
+  [ 6054.415305] freq_table: table entry 0: 710400 kHz
+  [ 6054.415307] freq_table: table entry 1: 806400 kHz
+  [ 6054.415308] freq_table: table entry 2: 998400 kHz
+  [ 6054.415309] freq_table: table entry 3: 1190400 kHz
+  [ 6054.415310] freq_table: table entry 4: 1440000 kHz
+  [ 6054.415311] freq_table: table entry 5: 1670400 kHz
+  [ 6054.415312] freq_table: table entry 6: 1920000 kHz
+  [ 6054.415313] freq_table: table entry 7: 2188800 kHz
+  [ 6054.415314] freq_table: table entry 8: 2515200 kHz
+  [ 6054.415315] freq_table: table entry 9: 2707200 kHz
+  [ 6054.415316] freq_table: table entry 10: 2976000 kHz
+  [ 6054.415317] freq_table: table entry 11: 3206400 kHz
+  [ 6054.415318] freq_table: table entry 12: 3417600 kHz
+  [ 6054.415319] freq_table: Freq table is sorted in ascending order
+  [ 6054.415321] cpu cpu0: add_cpu_dev_symlink: Adding symlink
+  [ 6054.415324] cpu cpu1: add_cpu_dev_symlink: Adding symlink
+  [ 6054.415326] cpu cpu2: add_cpu_dev_symlink: Adding symlink
+  [ 6054.415328] cpu cpu3: add_cpu_dev_symlink: Adding symlink
+  [ 6054.415488] cpufreq: setting new policy for CPU 0: 0 - 2147483647 kHz
+  [ 6054.415490] freq_table: request for verification of policy (0 - 2147483647 kHz) for cpu 0
+  [ 6054.415492] freq_table: verification lead to (710400 - 3417600 kHz) for cpu 0
+  [ 6054.415494] cpufreq: new min and max freqs are 710400 - 3417600 kHz
+  [ 6054.415495] cpufreq: governor switch
+  [ 6054.415496] cpufreq: cpufreq_init_governor: for CPU 0
+  [ 6054.415502] cpufreq: cpufreq_start_governor: for CPU 0
+  [ 6054.415505] cpufreq: governor change
+  [ 6054.418734] cpufreq: initialization complete
+  [ 6054.418736] cpu cpu1: cpufreq_add_dev: adding CPU1
+  [ 6054.418738] cpufreq: cpufreq_online: bringing CPU1 online
+  [ 6054.418739] cpu cpu2: cpufreq_add_dev: adding CPU2
+  [ 6054.418741] cpufreq: cpufreq_online: bringing CPU2 online
+  [ 6054.418742] cpu cpu3: cpufreq_add_dev: adding CPU3
+  [ 6054.418743] cpufreq: cpufreq_online: bringing CPU3 online
+  [ 6054.418745] cpu cpu4: cpufreq_add_dev: adding CPU4
+  [ 6054.418746] cpufreq: cpufreq_online: bringing CPU4 online
+  [ 6054.418774] cpu cpu4: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.418776] cpu cpu4: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.418782] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418811] cpu cpu4: [1][NCC1]:: Registered OPP[0] 710400000
+  [ 6054.418813] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418842] cpu cpu4: [1][NCC1]:: Registered OPP[1] 806400000
+  [ 6054.418844] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418872] cpu cpu4: [1][NCC1]:: Registered OPP[2] 998400000
+  [ 6054.418874] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418902] cpu cpu4: [1][NCC1]:: Registered OPP[3] 1190400000
+  [ 6054.418904] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418932] cpu cpu4: [1][NCC1]:: Registered OPP[4] 1440000000
+  [ 6054.418933] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418960] cpu cpu4: [1][NCC1]:: Registered OPP[5] 1670400000
+  [ 6054.418962] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.418990] cpu cpu4: [1][NCC1]:: Registered OPP[6] 1920000000
+  [ 6054.418992] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419022] cpu cpu4: [1][NCC1]:: Registered OPP[7] 2188800000
+  [ 6054.419024] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419059] cpu cpu4: [1][NCC1]:: Registered OPP[8] 2515200000
+  [ 6054.419061] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419093] cpu cpu4: [1][NCC1]:: Registered OPP[9] 2707200000
+  [ 6054.419095] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419134] cpu cpu4: [1][NCC1]:: Registered OPP[10] 2976000000
+  [ 6054.419136] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419171] cpu cpu4: [1][NCC1]:: Registered OPP[11] 3206400000
+  [ 6054.419173] cpu cpu4: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419217] cpu cpu4: [1][NCC1]:: Registered OPP[12] 3417600000
+  [ 6054.419228] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000001
+  [ 6054.419260] cpufreq: handle_update for cpu 0 called
+  [ 6054.419262] cpufreq: updating policy for CPU 0
+  [ 6054.419263] cpufreq: setting new policy for CPU 0: 0 - 3417600 kHz
+  [ 6054.419264] freq_table: request for verification of policy (0 - 3417600 kHz) for cpu 0
+  [ 6054.419266] freq_table: verification lead to (710400 - 3417600 kHz) for cpu 0
+  [ 6054.419267] cpufreq: new min and max freqs are 710400 - 3417600 kHz
+  [ 6054.419269] cpufreq: governor limits update
+  [ 6054.419270] cpufreq: cpufreq_governor_limits: for CPU 0
+  [ 6054.419550] cpufreq: last reference is dropped
+  [ 6054.419553] cpufreq: waiting for dropping of refcount
+  [ 6054.419555] cpufreq: wait complete
+  [ 6054.419558] cpu cpu5: cpufreq_add_dev: adding CPU5
+  [ 6054.419560] cpufreq: cpufreq_online: bringing CPU5 online
+  [ 6054.419584] cpu cpu5: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.419586] cpu cpu5: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.419595] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419633] cpu cpu5: [1][NCC1]:: Registered OPP[0] 710400000
+  [ 6054.419635] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419673] cpu cpu5: [1][NCC1]:: Registered OPP[1] 806400000
+  [ 6054.419674] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419709] cpu cpu5: [1][NCC1]:: Registered OPP[2] 998400000
+  [ 6054.419711] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419748] cpu cpu5: [1][NCC1]:: Registered OPP[3] 1190400000
+  [ 6054.419750] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419784] cpu cpu5: [1][NCC1]:: Registered OPP[4] 1440000000
+  [ 6054.419786] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419824] cpu cpu5: [1][NCC1]:: Registered OPP[5] 1670400000
+  [ 6054.419826] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419860] cpu cpu5: [1][NCC1]:: Registered OPP[6] 1920000000
+  [ 6054.419862] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419900] cpu cpu5: [1][NCC1]:: Registered OPP[7] 2188800000
+  [ 6054.419902] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419936] cpu cpu5: [1][NCC1]:: Registered OPP[8] 2515200000
+  [ 6054.419938] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.419970] cpu cpu5: [1][NCC1]:: Registered OPP[9] 2707200000
+  [ 6054.419972] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420009] cpu cpu5: [1][NCC1]:: Registered OPP[10] 2976000000
+  [ 6054.420011] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420044] cpu cpu5: [1][NCC1]:: Registered OPP[11] 3206400000
+  [ 6054.420046] cpu cpu5: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420085] cpu cpu5: [1][NCC1]:: Registered OPP[12] 3417600000
+  [ 6054.420098] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000001
+  [ 6054.420382] cpufreq: last reference is dropped
+  [ 6054.420383] cpufreq: waiting for dropping of refcount
+  [ 6054.420384] cpufreq: wait complete
+  [ 6054.420386] cpu cpu6: cpufreq_add_dev: adding CPU6
+  [ 6054.420387] cpufreq: cpufreq_online: bringing CPU6 online
+  [ 6054.420404] cpu cpu6: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.420406] cpu cpu6: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.420412] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420444] cpu cpu6: [1][NCC1]:: Registered OPP[0] 710400000
+  [ 6054.420446] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420481] cpu cpu6: [1][NCC1]:: Registered OPP[1] 806400000
+  [ 6054.420483] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420513] cpu cpu6: [1][NCC1]:: Registered OPP[2] 998400000
+  [ 6054.420515] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420559] cpu cpu6: [1][NCC1]:: Registered OPP[3] 1190400000
+  [ 6054.420561] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420592] cpu cpu6: [1][NCC1]:: Registered OPP[4] 1440000000
+  [ 6054.420594] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420622] cpu cpu6: [1][NCC1]:: Registered OPP[5] 1670400000
+  [ 6054.420624] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420655] cpu cpu6: [1][NCC1]:: Registered OPP[6] 1920000000
+  [ 6054.420657] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420696] cpu cpu6: [1][NCC1]:: Registered OPP[7] 2188800000
+  [ 6054.420697] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420736] cpu cpu6: [1][NCC1]:: Registered OPP[8] 2515200000
+  [ 6054.420738] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420763] cpu cpu6: [1][NCC1]:: Registered OPP[9] 2707200000
+  [ 6054.420765] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420793] cpu cpu6: [1][NCC1]:: Registered OPP[10] 2976000000
+  [ 6054.420795] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420832] cpu cpu6: [1][NCC1]:: Registered OPP[11] 3206400000
+  [ 6054.420833] cpu cpu6: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.420874] cpu cpu6: [1][NCC1]:: Registered OPP[12] 3417600000
+  [ 6054.420884] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000001
+  [ 6054.421109] cpufreq: last reference is dropped
+  [ 6054.421110] cpufreq: waiting for dropping of refcount
+  [ 6054.421111] cpufreq: wait complete
+  [ 6054.421113] cpu cpu7: cpufreq_add_dev: adding CPU7
+  [ 6054.421114] cpu cpu8: cpufreq_add_dev: adding CPU8
+  [ 6054.421115] cpufreq: cpufreq_online: bringing CPU8 online
+  [ 6054.421128] cpu cpu8: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.421130] cpu cpu8: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.421136] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421160] cpu cpu8: [2][NCC2]:: Registered OPP[0] 710400000
+  [ 6054.421161] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421198] cpu cpu8: [2][NCC2]:: Registered OPP[1] 806400000
+  [ 6054.421199] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421237] cpu cpu8: [2][NCC2]:: Registered OPP[2] 998400000
+  [ 6054.421239] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421273] cpu cpu8: [2][NCC2]:: Registered OPP[3] 1190400000
+  [ 6054.421275] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421301] cpu cpu8: [2][NCC2]:: Registered OPP[4] 1440000000
+  [ 6054.421303] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421328] cpu cpu8: [2][NCC2]:: Registered OPP[5] 1670400000
+  [ 6054.421329] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421366] cpu cpu8: [2][NCC2]:: Registered OPP[6] 1920000000
+  [ 6054.421368] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421402] cpu cpu8: [2][NCC2]:: Registered OPP[7] 2188800000
+  [ 6054.421404] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421430] cpu cpu8: [2][NCC2]:: Registered OPP[8] 2515200000
+  [ 6054.421432] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421455] cpu cpu8: [2][NCC2]:: Registered OPP[9] 2707200000
+  [ 6054.421457] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421496] cpu cpu8: [2][NCC2]:: Registered OPP[10] 2976000000
+  [ 6054.421498] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421535] cpu cpu8: [2][NCC2]:: Registered OPP[11] 3206400000
+  [ 6054.421537] cpu cpu8: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421566] cpu cpu8: [2][NCC2]:: Registered OPP[12] 3417600000
+  [ 6054.421576] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000002
+  [ 6054.421900] cpufreq: last reference is dropped
+  [ 6054.421901] cpufreq: waiting for dropping of refcount
+  [ 6054.421902] cpufreq: wait complete
+  [ 6054.421903] cpu cpu9: cpufreq_add_dev: adding CPU9
+  [ 6054.421904] cpufreq: cpufreq_online: bringing CPU9 online
+  [ 6054.421920] cpu cpu9: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.421922] cpu cpu9: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.421926] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421962] cpu cpu9: [2][NCC2]:: Registered OPP[0] 710400000
+  [ 6054.421964] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.421998] cpu cpu9: [2][NCC2]:: Registered OPP[1] 806400000
+  [ 6054.421999] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422027] cpu cpu9: [2][NCC2]:: Registered OPP[2] 998400000
+  [ 6054.422028] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422053] cpu cpu9: [2][NCC2]:: Registered OPP[3] 1190400000
+  [ 6054.422055] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422091] cpu cpu9: [2][NCC2]:: Registered OPP[4] 1440000000
+  [ 6054.422093] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422124] cpu cpu9: [2][NCC2]:: Registered OPP[5] 1670400000
+  [ 6054.422126] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422153] cpu cpu9: [2][NCC2]:: Registered OPP[6] 1920000000
+  [ 6054.422154] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422178] cpu cpu9: [2][NCC2]:: Registered OPP[7] 2188800000
+  [ 6054.422180] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422227] cpu cpu9: [2][NCC2]:: Registered OPP[8] 2515200000
+  [ 6054.422229] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422260] cpu cpu9: [2][NCC2]:: Registered OPP[9] 2707200000
+  [ 6054.422262] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422291] cpu cpu9: [2][NCC2]:: Registered OPP[10] 2976000000
+  [ 6054.422292] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422316] cpu cpu9: [2][NCC2]:: Registered OPP[11] 3206400000
+  [ 6054.422317] cpu cpu9: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422353] cpu cpu9: [2][NCC2]:: Registered OPP[12] 3417600000
+  [ 6054.422361] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000002
+  [ 6054.422581] cpufreq: last reference is dropped
+  [ 6054.422583] cpufreq: waiting for dropping of refcount
+  [ 6054.422584] cpufreq: wait complete
+  [ 6054.422585] cpu cpu10: cpufreq_add_dev: adding CPU10
+  [ 6054.422587] cpufreq: cpufreq_online: bringing CPU10 online
+  [ 6054.422602] cpu cpu10: dev_pm_opp_of_get_sharing_cpus: Couldn't find opp node.
+  [ 6054.422604] cpu cpu10: dev_pm_opp_get_opp_count: OPP table not found (-19)
+  [ 6054.422609] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422648] cpu cpu10: [2][NCC2]:: Registered OPP[0] 710400000
+  [ 6054.422649] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422672] cpu cpu10: [2][NCC2]:: Registered OPP[1] 806400000
+  [ 6054.422674] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422701] cpu cpu10: [2][NCC2]:: Registered OPP[2] 998400000
+  [ 6054.422703] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422736] cpu cpu10: [2][NCC2]:: Registered OPP[3] 1190400000
+  [ 6054.422738] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422775] cpu cpu10: [2][NCC2]:: Registered OPP[4] 1440000000
+  [ 6054.422777] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422801] cpu cpu10: [2][NCC2]:: Registered OPP[5] 1670400000
+  [ 6054.422802] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422830] cpu cpu10: [2][NCC2]:: Registered OPP[6] 1920000000
+  [ 6054.422831] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422864] cpu cpu10: [2][NCC2]:: Registered OPP[7] 2188800000
+  [ 6054.422865] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422901] cpu cpu10: [2][NCC2]:: Registered OPP[8] 2515200000
+  [ 6054.422903] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422931] cpu cpu10: [2][NCC2]:: Registered OPP[9] 2707200000
+  [ 6054.422932] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422956] cpu cpu10: [2][NCC2]:: Registered OPP[10] 2976000000
+  [ 6054.422958] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.422994] cpu cpu10: [2][NCC2]:: Registered OPP[11] 3206400000
+  [ 6054.422996] cpu cpu10: _update_opp_table_clk: Couldn't find clock: -2
+  [ 6054.423031] cpu cpu10: [2][NCC2]:: Registered OPP[12] 3417600000
+  [ 6054.423039] arm-scmi arm-scmi.0.auto: SCMI Notifications - registered NEW handler - key:13000002
+  [ 6054.423266] cpufreq: last reference is dropped
+  [ 6054.423268] cpufreq: waiting for dropping of refcount
+  [ 6054.423269] cpufreq: wait complete
+  [ 6054.423270] cpu cpu11: cpufreq_add_dev: adding CPU11
+  [ 6054.423272] cpufreq: driver scmi up and running
+  [ 6054.423311] scmi_core: Registered new scmi driver scmi-cpufreq
+
+===== policies =====
+  policy0: [0 1 2 3]

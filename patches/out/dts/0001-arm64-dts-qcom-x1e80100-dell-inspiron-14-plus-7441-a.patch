@@ -1,0 +1,120 @@
+From cdf312889c08cf7a25a85683d0f7eb672334336a Mon Sep 17 00:00:00 2001
+From: Charlie Garner <charlie@akao.au>
+Date: Tue, 8 Sep 2026 03:25:29 +0930
+Subject: [PATCH 1/2] arm64: dts: qcom: x1e80100-dell-inspiron-14-plus-7441:
+ add PWM backlight
+
+The panel on the Dell Inspiron 14 Plus 7441 (AUO B140QAX01.H) cannot have
+its brightness set over eDP AUX. DPCD 0x702 has BRIGHTNESS_PWM_PIN_CAP set
+but BRIGHTNESS_AUX_SET_CAP clear:
+
+	0x701 GENERAL_CAP_1            = 0x9b
+	0x702 BACKLIGHT_ADJUSTMENT_CAP = 0x91   bit1 (AUX_SET) clear
+	0x721 MODE_SET                 = 0x00   control mode: PWM pin
+
+With no backlight phandle on the panel, panel-edp falls back to
+drm_panel_dp_aux_backlight(). drm_edp_backlight_supported() only tests
+0x701 bit0, which is set, so a backlight device is registered - but
+drm_edp_backlight_probe_max() returns early when !aux_set, leaving max at
+0:
+
+	systemd-backlight: dp_aux_backlight: Maximum brightness is 0, ignoring device.
+	gnome-shell: Backlight is unusable because the maximum brightness 0 is
+	             bigger than minimum brightness 0
+
+Brightness is driven by PWM instead. UEFI already configures the pad and
+leaves it running, which is how the panel is lit before Linux touches it:
+
+	gpiochip0 (c42d000.spmi:pmic@0:gpio@8800, PMK8550):
+	  gpio5 : out low func3 vin-0 pull-down 10uA push-pull medium
+
+and the corresponding LPG is present but disabled:
+
+	pmic@0/pwm  qcom,pmk8550-pwm  status=disabled
+
+This matches the PWM wiring of the HP OmniBook X14
+(x1-hp-omnibook-x14.dtsi), so describe it the same way: enable
+pmk8550_pwm, add the pinctrl state for gpio5 func3, and give the panel a
+pwm-backlight.
+
+The panel keeps its existing enable-gpios and edp_bl_en pinctrl, so power
+sequencing is unchanged; only brightness control is added.
+
+Keep this in the Inspiron DT rather than x1-dell-thena.dtsi. The Latitude
+7455 shares the dtsi but was submitted with a different panel (BOE
+NE14QDM) and a working backlight without any PWM description, and this
+has only been tested on the Inspiron. Label the panel in the dtsi so the
+board DT can attach the backlight, as the ThinkPad T14s LCD variant does.
+
+Signed-off-by: Charlie Garner <charlie@akao.au>
+---
+
+Notes:
+    If a Latitude 7455 owner can confirm the same PWM wiring on that machine,
+    this can move to x1-dell-thena.dtsi.
+
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi   |  2 +-
+ .../x1e80100-dell-inspiron-14-plus-7441.dts   | 27 +++++++++++++++++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index 2ebb42906c9b..ce31c9f5cd05 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -1039,7 +1039,7 @@ &mdss_dp3 {
+ 	status = "okay";
+ 
+ 	aux-bus {
+-		panel {
++		panel: panel {
+ 			compatible = "edp-panel";
+ 			enable-gpios = <&tlmm 74 GPIO_ACTIVE_HIGH>;
+ 			power-supply = <&vreg_edp_3p3>;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+index 75e10d97c386..5779a4e84522 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+@@ -10,6 +10,18 @@
+ / {
+ 	model = "Dell Inspiron 14 Plus 7441";
+ 	compatible = "dell,inspiron-14-plus-7441", "qcom,x1e80100";
++
++	backlight: backlight {
++		compatible = "pwm-backlight";
++		pwms = <&pmk8550_pwm 0 5000000>;
++
++		brightness-levels = <0 2048 4096 8192 16384 65535>;
++		num-interpolated-steps = <20>;
++		default-brightness-level = <80>;
++
++		pinctrl-0 = <&edp_bl_pwm>;
++		pinctrl-names = "default";
++	};
+ };
+ 
+ &sound {
+@@ -42,6 +54,21 @@ &iris {
+ 	status = "okay";
+ };
+ 
++&panel {
++	backlight = <&backlight>;
++};
++
++&pmk8550_gpios {
++	edp_bl_pwm: edp-bl-pwm-state {
++		pins = "gpio5";
++		function = "func3";
++	};
++};
++
++&pmk8550_pwm {
++	status = "okay";
++};
++
+ &remoteproc_adsp {
+ 	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-7441/qcadsp8380.mbn",
+ 			"qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf";
+-- 
+2.55.0
+

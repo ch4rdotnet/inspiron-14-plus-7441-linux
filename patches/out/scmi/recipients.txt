@@ -1,0 +1,10 @@
+# from ./scripts/get_maintainer.pl on the regenerated patch (base 60a89ec8d8f5)
+To: Sudeep Holla <sudeep.holla@kernel.org>
+To: Cristian Marussi <cristian.marussi@arm.com>
+Cc: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+Cc: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Dhruva Gole <d-gole@ti.com>
+Cc: arm-scmi@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org

@@ -1,0 +1,19 @@
+# config overrides for the fedora kernel build, merged over the generated
+# config by the spec's own kernel-local hook (Source3001, merge.py)
+
+# video clock controller, fedora ships this off. drivers/clk/qcom/videocc-sm8550.c
+# matches qcom,x1e80100-videocc and its kconfig help names the platform, without
+# it aaf0000.clock-controller never binds and qcom-iris times out on its power
+# domains (-110), so there is no /dev/video* and no hardware video decode
+CONFIG_SM_VIDEOCC_8550=m
+
+# builtin rather than a module, because a modular scmi driver can't autoload.
+# scmi devices are created when a driver requests them, so scmi_dev.N:13:cpufreq
+# doesn't exist until the module is already loaded, and MODULE_DEVICE_TABLE(scmi)
+# is a no-op in file2alias.c so udev has no alias to match either. fedora already
+# builds the sibling drivers in (ARM_SCMI_PERF_DOMAIN, ARM_SCMI_POWER_DOMAIN)
+CONFIG_ARM_SCMI_CPUFREQ=y
+
+# deliberately not enabling CONFIG_CRYPTO_DEV_QCE. 1dfa000.crypto is unbound too,
+# but the oryon cores have armv8 crypto extensions (aes pmull sha1 sha2 sha3
+# sha512) which beat the offload for anything but very large bulk operations
