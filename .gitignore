@@ -1,0 +1,21 @@
+# the kernel build tree and the driver pack are large and regenerable
+build/
+firmware/
+*.exe
+*.rpm
+__pycache__/
+*.pyc
+# out-of-tree module build products
+*.ko
+*.o
+*.mod
+*.mod.c
+*.cmd
+.*.cmd
+modules.order
+Module.symvers
+.tmp_versions/
+# sources extracted by tools/camera/prepare.sh
+tools/camera/camssdiag/*.[ch]
+tools/camera/ccidiag/ccidiag.c
+tools/camera/ov02diag/ov02diag.c
